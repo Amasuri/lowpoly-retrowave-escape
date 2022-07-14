@@ -22,7 +22,12 @@ public class CarController : MonoBehaviour
 
     private void MoveForward()
     {
-        transform.position += new Vector3(Time.deltaTime, 0, 0);
+        var movVec = new Vector3(Time.deltaTime, 0, 0);
+
+        if (IsPlayerCar)
+            transform.position += movVec;
+        else
+            transform.position -= movVec;
     }
 
     public void MoveToLeft()
