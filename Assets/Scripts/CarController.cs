@@ -12,6 +12,9 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         allCars.Add(this);
+
+        if (!IsPlayerCar)
+            Destroy(gameObject, 10);
     }
 
     // Update is called once per frame
