@@ -11,6 +11,8 @@ public class CameraControllerRun : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        Debug.Log(transform.position);
+
         transform.rotation = defaultRotation;
     }
 
