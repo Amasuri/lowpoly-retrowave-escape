@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour
     public Collider collider;
 
     public bool IsPlayerCar;
-    private bool hasThisCarCollided = false;
+    public bool HasThisCarCollided { get; private set; }
 
     private const float speedFactor = 15f;
 
@@ -17,6 +17,7 @@ public class CarController : MonoBehaviour
     private void Start()
     {
         allCars.Add(this);
+        HasThisCarCollided = false;
 
         //Make sure passing cars get KO'd
         if (!IsPlayerCar)
@@ -26,7 +27,7 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(!hasThisCarCollided)
+        if(!HasThisCarCollided)
             MoveForward();
     }
 
@@ -36,10 +37,13 @@ public class CarController : MonoBehaviour
         if (collision.gameObject.GetComponent<CarController>() == null)
             return;
 
-        hasThisCarCollided = true;
+        HasThisCarCollided = true;
 
         if (IsPlayerCar)
-            LaneController.CollidePlayer();
+            LaneController.RecordThatPlayerCollided();
+
+        //Jerk the car a but upwards
+        transform.Rotate(new Vector3(10, 0, 0));
     }
 
     static public CarController GetPlayerCar()

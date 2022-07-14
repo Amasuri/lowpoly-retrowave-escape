@@ -32,7 +32,7 @@ public class LaneController : MonoBehaviour
         }
     }
 
-    public static void CollidePlayer()
+    public static void RecordThatPlayerCollided()
     {
         HasPlayerCollided = true;
     }
