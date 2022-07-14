@@ -24,6 +24,9 @@ public class CameraControllerRun : MonoBehaviour
 
     private void ChasePlayerCar()
     {
+        if (LaneController.hasPlayerCollided)
+            return;
+
         var pCar = CarController.GetPlayerCar();
 
         if (pCar != null)

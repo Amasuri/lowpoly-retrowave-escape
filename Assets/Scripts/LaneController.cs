@@ -13,6 +13,8 @@ public class LaneController : MonoBehaviour
     private const float maxSpawnDelay = 3f;
     private float currentSpawnDelay;
 
+    static public bool hasPlayerCollided { get; private set; }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -28,6 +30,11 @@ public class LaneController : MonoBehaviour
             currentSpawnDelay = maxSpawnDelay;
             SpawnNewTraffic();
         }
+    }
+
+    public static void CollidePlayer()
+    {
+        hasPlayerCollided = true;
     }
 
     private void SpawnNewTraffic()
