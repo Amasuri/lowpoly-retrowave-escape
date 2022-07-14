@@ -35,14 +35,11 @@ public class CarController : MonoBehaviour
             transform.position -= movVec;
     }
 
-    public void MoveToLeft()
+    public void ChangeLane(bool toLeft = true)
     {
-        transform.position += new Vector3(0, 0, LaneController.laneWidthInWU);
-    }
+        var dir = toLeft ? 1 : -1;
 
-    public void MoveToRight()
-    {
-        transform.position += new Vector3(0, 0, -LaneController.laneWidthInWU);
+        transform.position += new Vector3(0, 0, dir * LaneController.laneWidthInWU);
     }
 
     static public CarController GetPlayerCar()
