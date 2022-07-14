@@ -25,6 +25,16 @@ public class CarController : MonoBehaviour
         transform.position += new Vector3(Time.deltaTime, 0, 0);
     }
 
+    public void MoveToLeft()
+    {
+        transform.position += new Vector3(0, 0, LaneController.laneWidthInWU);
+    }
+
+    public void MoveToRight()
+    {
+        transform.position += new Vector3(0, 0, -LaneController.laneWidthInWU);
+    }
+
     static public CarController GetPlayerCar()
     {
         foreach (var car in allCars)
