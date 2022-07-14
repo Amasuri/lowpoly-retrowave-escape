@@ -11,28 +11,31 @@ public class CarController : MonoBehaviour
     public bool IsPlayerCar;
     private bool hasThisCarCollided = false;
 
-    private const float speedFactor = 5f;
+    private const float speedFactor = 15f;
 
     // Start is called before the first frame update
     private void Start()
     {
         allCars.Add(this);
 
+        //Make sure passing cars get KO'd
         if (!IsPlayerCar)
-            Destroy(gameObject, 10);
+            Destroy(gameObject, 15);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        KeepAboveFloor();
-
         if(!hasThisCarCollided)
             MoveForward();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Make sure you write only for car collisions
+        if (collision.gameObject.GetComponent<CarController>() == null)
+            return;
+
         hasThisCarCollided = true;
 
         if (IsPlayerCar)
@@ -65,11 +68,5 @@ public class CarController : MonoBehaviour
             transform.position += movVec;
         else
             transform.position -= movVec;
-    }
-
-    private void KeepAboveFloor()
-    {
-        if (transform.position.y < 0f)
-            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
     }
 }

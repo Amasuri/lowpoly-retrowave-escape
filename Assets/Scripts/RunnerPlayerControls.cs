@@ -13,6 +13,9 @@ public class RunnerPlayerControls : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if (LaneController.HasPlayerCollided)
+            return;
+
         PC_CarControl();
     }
 
