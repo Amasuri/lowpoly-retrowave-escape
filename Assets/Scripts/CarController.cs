@@ -8,6 +8,8 @@ public class CarController : MonoBehaviour
 
     public bool IsPlayerCar;
 
+    private const float speedFactor = 5f;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -25,7 +27,7 @@ public class CarController : MonoBehaviour
 
     private void MoveForward()
     {
-        var movVec = new Vector3(Time.deltaTime, 0, 0);
+        var movVec = new Vector3(Time.deltaTime * speedFactor, 0, 0);
 
         if (IsPlayerCar)
             transform.position += movVec;

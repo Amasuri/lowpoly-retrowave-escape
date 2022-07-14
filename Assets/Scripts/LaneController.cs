@@ -7,7 +7,9 @@ public class LaneController : MonoBehaviour
     public Transform TrafficCar1;
 
     public const float laneWidthInWU = 2f;
+    public const float spawnOffsetX = 40f;
 
+    //Timer
     private const float maxSpawnDelay = 3f;
     private float currentSpawnDelay;
 
@@ -37,6 +39,11 @@ public class LaneController : MonoBehaviour
         var pPos = pCar.transform.position;
 
         var newTrafficCar = Instantiate(TrafficCar1) as Transform;
-        newTrafficCar.position = pPos + new Vector3(10f, 0, laneWidthInWU);
+        newTrafficCar.position = new Vector3(pPos.x + spawnOffsetX, pPos.y, GetRandomLane());
+    }
+
+    private float GetRandomLane()
+    {
+        return laneWidthInWU * Random.Range(-2, 2+1);
     }
 }
