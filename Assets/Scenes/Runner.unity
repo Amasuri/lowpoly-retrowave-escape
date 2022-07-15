@@ -190,17 +190,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b083bf81f45a356479942d8d9fa01ffb,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b083bf81f45a356479942d8d9fa01ffb,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b083bf81f45a356479942d8d9fa01ffb,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b083bf81f45a356479942d8d9fa01ffb,
         type: 3}
@@ -286,6 +286,7 @@ MonoBehaviour:
   collider: {fileID: 633956968}
   rigidbody: {fileID: 633956969}
   IsPlayerCar: 1
+  IsTurningNow: 0
 --- !u!114 &633956967
 MonoBehaviour:
   m_ObjectHideFlags: 0
