@@ -79,11 +79,11 @@ public class CarController : MonoBehaviour
     {
         //Smooth lane change
         var signedDelta = transform.position.z - TurningGoalLane;
-        transform.position += new Vector3(0, 0, -signedDelta / 100);
+        transform.position += new Vector3(0, 0, -signedDelta / 25);
 
         //Smooth rotation dip
         var rot = Mathf.Cos(signedDelta + (1f * Mathf.Sign(signedDelta)));
-        transform.Rotate(new Vector3(0, rot * Mathf.Sign(-signedDelta), 0));
+        transform.Rotate(new Vector3(0, rot / 2 * Mathf.Sign(-signedDelta), 0));
 
         //If very close to the right lane, to the snap
         if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU / 25)
