@@ -7,6 +7,7 @@ public class CarController : MonoBehaviour
     static public List<CarController> allCars = new List<CarController>();
 
     public Collider collider;
+    public Rigidbody rigidbody;
 
     public bool IsPlayerCar;
     public bool HasThisCarCollided { get; private set; }
@@ -42,8 +43,9 @@ public class CarController : MonoBehaviour
         if (IsPlayerCar)
             LaneController.RecordThatPlayerCollided();
 
-        //Jerk the car a but upwards
+        //Jerk the car a but upwards and to the side
         transform.Rotate(new Vector3(10, 0, 0));
+        rigidbody.AddForce(new Vector3(Random.Range(-1f,1f), 2, 0), ForceMode.Impulse);
     }
 
     static public CarController GetPlayerCar()

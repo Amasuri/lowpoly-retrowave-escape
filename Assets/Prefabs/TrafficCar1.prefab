@@ -649,6 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collider: {fileID: 6611789616142238342}
+  rigidbody: {fileID: 68415592729726038}
   IsPlayerCar: 0
 --- !u!65 &6611789616142238342
 BoxCollider:
@@ -661,7 +662,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4.1338625, y: 0.95, z: 1.5646796}
+  m_Size: {x: 4.1338625, y: 0.99, z: 1.5646796}
   m_Center: {x: -0.09194708, y: 0.5, z: 0.00053048134}
 --- !u!54 &68415592729726038
 Rigidbody:
