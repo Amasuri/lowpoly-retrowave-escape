@@ -15,7 +15,7 @@ public class CameraControllerRun : MonoBehaviour
     private Vector3 currentPosOffset;
 
     private const float startFoV = 60;
-    private const float endFoV = 75;
+    private const float endFoV = 90;
 
     // Start is called before the first frame update
     private void Start()
