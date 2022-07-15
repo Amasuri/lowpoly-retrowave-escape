@@ -9,7 +9,10 @@ public class CarController : MonoBehaviour
     public Collider collider;
     public Rigidbody rigidbody;
 
+    private float TurningGoalLane = 0f;
+
     public bool IsPlayerCar;
+    public bool IsTurningNow;
     public bool HasThisCarCollided { get; private set; }
 
     private const float speedFactor = 15f;
@@ -19,6 +22,7 @@ public class CarController : MonoBehaviour
     {
         allCars.Add(this);
         HasThisCarCollided = false;
+        IsTurningNow = false;
 
         //Make sure passing cars get KO'd
         if (!IsPlayerCar)
@@ -28,8 +32,12 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(!HasThisCarCollided)
-            MoveForward();
+        if (HasThisCarCollided)
+            return;
+
+        MoveForward();
+        if(IsTurningNow)
+            DoSmoothTurn();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -59,11 +67,23 @@ public class CarController : MonoBehaviour
         return null;
     }
 
-    public void ChangeLane(bool toLeft = true)
+    public void StartChangingLane(bool toLeft = true)
     {
         var dir = toLeft ? 1 : -1;
 
-        transform.position += new Vector3(0, 0, dir * LaneController.laneWidthInWU);
+        IsTurningNow = true;
+        TurningGoalLane = transform.position.z + dir * LaneController.laneWidthInWU;
+    }
+
+    private void DoSmoothTurn()
+    {
+        var signedDelta = transform.position.z - TurningGoalLane;
+        transform.position += new Vector3(0, 0, -signedDelta / 100);
+        if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU / 25)
+        {
+            IsTurningNow = false;
+            transform.position = new Vector3(transform.position.x, transform.position.y, TurningGoalLane);
+        }
     }
 
     private void MoveForward()

@@ -24,9 +24,12 @@ public class RunnerPlayerControls : MonoBehaviour
     /// </summary>
     private void PC_CarControl()
     {
+        if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
+            return;
+
         if (Input.GetKeyDown(KeyCode.A))
-            CarController.GetPlayerCar().ChangeLane(toLeft: true);
+            CarController.GetPlayerCar().StartChangingLane(toLeft: true);
         else if (Input.GetKeyDown(KeyCode.D))
-            CarController.GetPlayerCar().ChangeLane(toLeft: false);
+            CarController.GetPlayerCar().StartChangingLane(toLeft: false);
     }
 }
