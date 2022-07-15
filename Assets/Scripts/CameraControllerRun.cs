@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class CameraControllerRun : MonoBehaviour
 {
+    public Camera camera;
+
     private readonly Vector3 startRotVec = new Vector3(27, 90, 0);
     private readonly Vector3 endRotVec = new Vector3(15, 90, 0);
 
-    private readonly Vector3 defaultOffset = new Vector3(-7, 4, 0);
+    private readonly Vector3 startPosOffset = new Vector3(-7, 4, 0);
+
+    private const float startFoV = 60;
+    private const float endFoV = 75;
 
     // Start is called before the first frame update
     private void Start()
     {
-        transform.rotation = Quaternion.Euler(startRotVec);
+        ResetSpeedEffects();
     }
 
     // Update is called once per frame
@@ -24,6 +29,13 @@ public class CameraControllerRun : MonoBehaviour
 
         ChasePlayerCar();
         CorrectAngleBasedOnElapsedTime();
+        CorrectFoVBasedOnElapsedTime();
+    }
+
+    public void ResetSpeedEffects()
+    {
+        transform.rotation = Quaternion.Euler(startRotVec);
+        camera.fieldOfView = startFoV;
     }
 
     private void ChasePlayerCar()
@@ -31,7 +43,7 @@ public class CameraControllerRun : MonoBehaviour
         var pCar = CarController.GetPlayerCar();
 
         if (pCar != null)
-            transform.position = pCar.transform.position + defaultOffset;
+            transform.position = pCar.transform.position + startPosOffset;
     }
 
     private void CorrectAngleBasedOnElapsedTime()
@@ -45,5 +57,18 @@ public class CameraControllerRun : MonoBehaviour
             rotVec = endRotVec;
 
         transform.rotation = Quaternion.Euler(rotVec);
+    }
+
+    private void CorrectFoVBasedOnElapsedTime()
+    {
+        var maxFoVdelta = endFoV - startFoV;
+
+        //Remaps elapsed time from time range 0-60s to camera FoV range 0-15 degrees delta
+        var currentFoVdelta = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, maxFoVdelta);
+        var resultFoV = startFoV + currentFoVdelta;
+        if (currentFoVdelta >= maxFoVdelta)
+            resultFoV = endFoV;
+
+        camera.fieldOfView = resultFoV;
     }
 }

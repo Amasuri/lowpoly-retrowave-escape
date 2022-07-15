@@ -607,6 +607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4855cbaa6e7a03d418a4127d67edbab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 963194227}
 --- !u!1 &1015635322 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2234988245686373574, guid: b083bf81f45a356479942d8d9fa01ffb,
