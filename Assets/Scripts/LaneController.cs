@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class LaneController : MonoBehaviour
 {
-    private readonly Vector3 defaultTerrainPosition = new Vector3(-terrainSpawnOffset, 0, -5); //new Vector3(-terrainSpawnOffset, 0, -5);
+    private readonly Vector3 defaultTerrainPosition = new Vector3(0, 0, -5); //new Vector3(-terrainSpawnOffset, 0, -5);
     private const float terrainLength = 100f; //isn't hooked; change in terrain editor prefab
-    private const float terrainSpawnOffset = 25f;
-    private const float startTerrainSpawnOffset = -terrainSpawnOffset;
 
     private int TimesTerrainWasSpawned;
 
@@ -49,7 +47,7 @@ public class LaneController : MonoBehaviour
             return;
         var pPos = pCar.transform.position;
 
-        if (((pPos.x + terrainSpawnOffset) / terrainLength) > TimesTerrainWasSpawned)
+        if ((pPos.x / terrainLength) > TimesTerrainWasSpawned)
             SpawnNextTerrainChunk();
     }
 
@@ -73,20 +71,20 @@ public class LaneController : MonoBehaviour
     private void SpawnNextTerrainChunk(bool first = false)
     {
         var plCar = CarController.GetPlayerCar();
-        if (plCar == null)
-            return;
+        var plPos = new Vector3(0, 0, 0);
+        if (plCar != null)
+            plPos = plCar.transform.position;
 
-        var offsetFactor = 0f;
         if (first)
-            offsetFactor = startTerrainSpawnOffset;
-
-        var plPos = plCar.transform.position;
-
-        var newTerrainChunk = Instantiate(TerrainPrefab) as Transform;
-        newTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x + offsetFactor, 0, 0);
+        {
+            var newTerrainChunk = Instantiate(TerrainPrefab) as Transform;
+            newTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x, 0, 0);
+            Destroy(newTerrainChunk.gameObject, 8f);
+        }
 
         var furtherNewTerrainChunk = Instantiate(TerrainPrefab) as Transform;
-        furtherNewTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x + offsetFactor + terrainLength, 0, 0);
+        furtherNewTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x + terrainLength, 0, 0);
+        Destroy(furtherNewTerrainChunk.gameObject, 12f);
 
         TimesTerrainWasSpawned++;
     }
