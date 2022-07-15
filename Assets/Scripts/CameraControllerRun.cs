@@ -11,6 +11,8 @@ public class CameraControllerRun : MonoBehaviour
     private readonly Vector3 endRotVec = new Vector3(15, 90, 0);
 
     private readonly Vector3 startPosOffset = new Vector3(-7, 4, 0);
+    private readonly Vector3 endPosOffset = new Vector3(-8, 4, 0);
+    private Vector3 currentPosOffset;
 
     private const float startFoV = 60;
     private const float endFoV = 75;
@@ -30,10 +32,12 @@ public class CameraControllerRun : MonoBehaviour
         ChasePlayerCar();
         CorrectAngleBasedOnElapsedTime();
         CorrectFoVBasedOnElapsedTime();
+        CorrectPosOffsetBasedOnElapsedTime();
     }
 
     public void ResetSpeedEffects()
     {
+        currentPosOffset = startPosOffset;
         transform.rotation = Quaternion.Euler(startRotVec);
         camera.fieldOfView = startFoV;
     }
@@ -43,7 +47,7 @@ public class CameraControllerRun : MonoBehaviour
         var pCar = CarController.GetPlayerCar();
 
         if (pCar != null)
-            transform.position = pCar.transform.position + startPosOffset;
+            transform.position = pCar.transform.position + currentPosOffset;
     }
 
     private void CorrectAngleBasedOnElapsedTime()
@@ -70,5 +74,18 @@ public class CameraControllerRun : MonoBehaviour
             resultFoV = endFoV;
 
         camera.fieldOfView = resultFoV;
+    }
+
+    private void CorrectPosOffsetBasedOnElapsedTime()
+    {
+        var maxPosXdelta = startPosOffset.x - endPosOffset.x;
+
+        //Remaps elapsed time from time range 0-60s to camera position offset 0-1 by X coordinate (Y not counted)
+        var currentPosXdelta = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, maxPosXdelta);
+        var resultPosX = startPosOffset.x - currentPosXdelta;
+        if (currentPosXdelta >= maxPosXdelta)
+            resultPosX = endPosOffset.x;
+
+        currentPosOffset = new Vector3(resultPosX, startPosOffset.y, startPosOffset.z);
     }
 }
