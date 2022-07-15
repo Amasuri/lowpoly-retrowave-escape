@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class LaneController : MonoBehaviour
 {
-    private readonly Vector3 defaultTerrainPosition = new Vector3(-10, 0, -500);
+    private readonly Vector3 defaultTerrainPosition = new Vector3(-terrainSpawnOffset, 0, -5); //new Vector3(-terrainSpawnOffset, 0, -5);
+    private const float terrainLength = 100f; //isn't hooked; change in terrain editor prefab
+    private const float terrainSpawnOffset = 25f;
+    private const float startTerrainSpawnOffset = -terrainSpawnOffset;
+
     private int TimesTerrainWasSpawned;
 
     public Transform TrafficCar1;
-    public Transform Terrain;
+    public Transform TerrainPrefab;
 
     public const float laneWidthInWU = 2f;
-    public const float spawnOffsetX = 40f;
+    public const float carSpawnOffsetX = 40f;
 
     //Timer
     private const float maxTrafficSpawnDelay = 3f;
@@ -25,7 +29,7 @@ public class LaneController : MonoBehaviour
         currentTrafficSpawnDelay = maxTrafficSpawnDelay;
         TimesTerrainWasSpawned = 0;
 
-        SpawnNextTerrainChunk();
+        SpawnNextTerrainChunk(first: true);
     }
 
     // Update is called once per frame
@@ -45,7 +49,7 @@ public class LaneController : MonoBehaviour
             return;
         var pPos = pCar.transform.position;
 
-        if (((pPos.x + 100f) / 1000f) > TimesTerrainWasSpawned)
+        if (((pPos.x + terrainSpawnOffset) / terrainLength) > TimesTerrainWasSpawned)
             SpawnNextTerrainChunk();
     }
 
@@ -63,19 +67,26 @@ public class LaneController : MonoBehaviour
         var pPos = pCar.transform.position;
 
         var newTrafficCar = Instantiate(TrafficCar1) as Transform;
-        newTrafficCar.position = new Vector3(pPos.x + spawnOffsetX, pPos.y, GetRandomLane());
+        newTrafficCar.position = new Vector3(pPos.x + carSpawnOffsetX, pPos.y, GetRandomLane());
     }
 
-    private void SpawnNextTerrainChunk()
+    private void SpawnNextTerrainChunk(bool first = false)
     {
-        var pCar = CarController.GetPlayerCar();
-        if (pCar == null)
+        var plCar = CarController.GetPlayerCar();
+        if (plCar == null)
             return;
 
-        var pPos = pCar.transform.position;
+        var offsetFactor = 0f;
+        if (first)
+            offsetFactor = startTerrainSpawnOffset;
 
-        var newTerrainChunk = Instantiate(Terrain) as Transform;
-        newTerrainChunk.position = defaultTerrainPosition + new Vector3(pPos.x, 0, 0);
+        var plPos = plCar.transform.position;
+
+        var newTerrainChunk = Instantiate(TerrainPrefab) as Transform;
+        newTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x + offsetFactor, 0, 0);
+
+        var furtherNewTerrainChunk = Instantiate(TerrainPrefab) as Transform;
+        furtherNewTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x + offsetFactor + terrainLength, 0, 0);
 
         TimesTerrainWasSpawned++;
     }

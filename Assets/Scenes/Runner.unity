@@ -337,7 +337,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrafficCar1: {fileID: 7114279385653207241, guid: fa8357a0beaed1241ba49aff3ebf2f74,
     type: 3}
-  Terrain: {fileID: 445709947431686073, guid: 51c987c70f28e874f80b5f6e1f455d6a, type: 3}
+  TerrainPrefab: {fileID: 445709947431686073, guid: 51c987c70f28e874f80b5f6e1f455d6a,
+    type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
