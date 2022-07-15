@@ -10,8 +10,8 @@ public class CameraControllerRun : MonoBehaviour
     private readonly Vector3 startRotVec = new Vector3(27, 90, 0);
     private readonly Vector3 endRotVec = new Vector3(15, 90, 0);
 
-    private readonly Vector3 startPosOffset = new Vector3(-7, 4, 0);
-    private readonly Vector3 endPosOffset = new Vector3(-8, 4, 0);
+    private readonly Vector3 startPosOffset = new Vector3(-5, 4, 0); //PC resolution is fine with y=4, but it looks ugh on mobile, so
+    private readonly Vector3 endPosOffset = new Vector3(-7, 4, 0);
     private Vector3 currentPosOffset;
 
     private const float startFoV = 60;
