@@ -15,7 +15,8 @@ public class CarController : MonoBehaviour
     public bool IsTurningNow;
     public bool HasThisCarCollided { get; private set; }
 
-    private const float speedFactor = 15f;
+    static private float speedFactor => 15f + speedIncrease;
+    static private float speedIncrease => RunTimer.TimeSinceLastRunStartSec / 1f; //approx 60f increase per minute
 
     // Start is called before the first frame update
     private void Start()
