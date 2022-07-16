@@ -30,14 +30,13 @@ public class CarController : MonoBehaviour
             Destroy(gameObject, 15);
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
         if (HasThisCarCollided)
             return;
 
         MoveForward();
-        if(IsTurningNow)
+        if (IsTurningNow)
             DoSmoothTurn();
     }
 
@@ -99,7 +98,7 @@ public class CarController : MonoBehaviour
 
     private void MoveForward()
     {
-        var movVec = new Vector3(Time.deltaTime * speedFactor, 0, 0);
+        var movVec = new Vector3(Time.fixedDeltaTime * speedFactor, 0, 0);
 
         if (IsPlayerCar)
             transform.position += movVec;
