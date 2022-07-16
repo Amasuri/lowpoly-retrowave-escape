@@ -11,8 +11,10 @@ public class CarController : MonoBehaviour
 
     private float TurningGoalLane = 0f;
 
+    public bool IsReverse { get; private set; }
     public bool IsPlayerCar;
     public bool IsTurningNow;
+
     public bool HasThisCarCollided { get; private set; }
 
     static private float speedFactorCurrent => (startSpeed + speedIncrease) > speedLimit ? speedLimit : (startSpeed + speedIncrease); //not pure speed because delta * speedfactor
@@ -79,6 +81,12 @@ public class CarController : MonoBehaviour
         TurningGoalLane = transform.position.z + dir * LaneController.laneWidthInWU;
     }
 
+    public void MakeReverse()
+    {
+        IsReverse = true;
+        transform.Rotate(new Vector3(0, 180, 0));
+    }
+
     private void DoSmoothTurn()
     {
         //Smooth lane change
@@ -102,11 +110,18 @@ public class CarController : MonoBehaviour
 
     private void MoveForward()
     {
-        var movVec = new Vector3(Time.fixedDeltaTime * speedFactorCurrent, 0, 0);
-
         if (IsPlayerCar)
+        {
+            var movVec = new Vector3(Time.fixedDeltaTime * speedFactorCurrent, 0, 0);
             transform.position += movVec;
+        }
         else
-            transform.position -= movVec;
+        {
+            var movVec = new Vector3(Time.fixedDeltaTime * startSpeed, 0, 0);
+            if(!IsReverse)
+                transform.position += movVec;
+            else
+                transform.position -= movVec;
+        }
     }
 }

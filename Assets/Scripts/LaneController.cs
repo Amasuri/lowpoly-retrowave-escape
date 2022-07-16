@@ -63,17 +63,26 @@ public class LaneController : MonoBehaviour
 
     private void SpawnNewTraffic()
     {
+        //Try to get player car pos safely
         var pCar = CarController.GetPlayerCar();
         if (pCar == null)
             return;
-
         var pPos = pCar.transform.position;
 
+        //Spawn offset is calculated depending on current time, but no more than max spawn offset
         var spawnOffset = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, carSpawnOffsetXmin, carSpawnOffsetXmax);
         spawnOffset = spawnOffset > carSpawnOffsetXmax ? carSpawnOffsetXmax : spawnOffset;
 
+        //Instantiate
         var newTrafficCar = Instantiate(TrafficCar1) as Transform;
         newTrafficCar.position = new Vector3(pPos.x + spawnOffset, pPos.y, GetRandomLane());
+
+        //10% chance to get new car be reverse-moving
+        if (Random.Range(0, 100) <= 10)
+        {
+            var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
+            car.MakeReverse();
+        }
     }
 
     private void SpawnNextTerrainChunk(bool first = false)
