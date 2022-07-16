@@ -53,13 +53,15 @@ public class CarController : MonoBehaviour
             return;
 
         HasThisCarCollided = true;
-
         if (IsPlayerCar)
             LaneController.RecordThatPlayerCollided();
 
-        //Jerk the car a but upwards and to the side
+        //Jerk the car a but upwards and to the side; add counterforce to it and the other car
         transform.Rotate(new Vector3(10, 0, 0));
-        rigidbody.AddForce(new Vector3(Random.Range(-1f,1f), 2, 0), ForceMode.Impulse);
+        var inertiaSum = startSpeed + speedFactorCurrent;
+        var xInertia = IsPlayerCar ? -inertiaSum : inertiaSum;
+        rigidbody.AddForce(new Vector3(xInertia, 2, Random.Range(-1f, 1f)), ForceMode.Impulse);
+        collision.rigidbody.AddForce(new Vector3(-xInertia, 2, Random.Range(-1f, 1f)), ForceMode.Impulse);
     }
 
     static public CarController GetPlayerCar()
