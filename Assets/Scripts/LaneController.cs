@@ -41,7 +41,7 @@ public class LaneController : MonoBehaviour
             SpawnNewTraffic();
         }
 
-        //Terrain spawning
+        //Terrain spawning (accuracy-dependent, so under fixed update)
         var pCar = CarController.GetPlayerCar();
         if (pCar == null)
             return;
@@ -49,6 +49,10 @@ public class LaneController : MonoBehaviour
 
         if ((pPos.x / terrainLength) > TimesTerrainWasSpawned)
             SpawnNextTerrainChunk();
+    }
+
+    private void FixedUpdate()
+    {
     }
 
     public static void RecordThatPlayerCollided()
@@ -75,15 +79,17 @@ public class LaneController : MonoBehaviour
         if (plCar != null)
             plPos = plCar.transform.position;
 
+        var nxtSpwnPosByPlX = ((int)plPos.x / (int)terrainLength) * terrainLength;
+
         if (first)
         {
             var newTerrainChunk = Instantiate(TerrainPrefab) as Transform;
-            newTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x, 0, 0);
+            newTerrainChunk.position = defaultTerrainPosition + new Vector3(nxtSpwnPosByPlX, 0, 0);
             Destroy(newTerrainChunk.gameObject, 8f);
         }
 
         var furtherNewTerrainChunk = Instantiate(TerrainPrefab) as Transform;
-        furtherNewTerrainChunk.position = defaultTerrainPosition + new Vector3(plPos.x + terrainLength, 0, 0);
+        furtherNewTerrainChunk.position = defaultTerrainPosition + new Vector3(nxtSpwnPosByPlX + terrainLength, 0, 0);
         Destroy(furtherNewTerrainChunk.gameObject, 12f);
 
         TimesTerrainWasSpawned++;
