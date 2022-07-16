@@ -18,6 +18,8 @@ public class CarController : MonoBehaviour
     static private float speedFactor => 15f + speedIncrease;
     static private float speedIncrease => RunTimer.TimeSinceLastRunStartSec / 1f; //approx 60f increase per minute
 
+    private const float rotAmplitude = 3f;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -79,13 +81,13 @@ public class CarController : MonoBehaviour
     {
         //Smooth lane change
         var signedDelta = transform.position.z - TurningGoalLane;
-        transform.position += new Vector3(0, 0, -signedDelta / 25);
+        transform.position += new Vector3(0, 0, -signedDelta / 10);
 
         //Smooth rotation dip
-        var rot = Mathf.Cos(signedDelta + (1f * Mathf.Sign(signedDelta)));
-        transform.Rotate(new Vector3(0, rot / 2 * Mathf.Sign(-signedDelta), 0));
+        var rot = Mathf.Cos(signedDelta + (1 * Mathf.Sign(signedDelta)));
+        transform.Rotate(new Vector3(0, rot * rotAmplitude * Mathf.Sign(-signedDelta), 0));
 
-        //If very close to the right lane, to the snap
+        //If very close to the right lane, do the snap
         if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU / 25)
         {
             IsTurningNow = false;
