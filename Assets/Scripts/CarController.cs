@@ -15,7 +15,9 @@ public class CarController : MonoBehaviour
     public bool IsTurningNow;
     public bool HasThisCarCollided { get; private set; }
 
-    static private float speedFactor => 15f + speedIncrease;
+    static private float speedFactorCurrent => (startSpeed + speedIncrease) > speedLimit ? speedLimit : (startSpeed + speedIncrease); //not pure speed because delta * speedfactor
+    private const float startSpeed = 15f;
+    private const float speedLimit = 45f; //30s limit; 60s would be ~75f
     static private float speedIncrease => RunTimer.TimeSinceLastRunStartSec / 1f; //approx 60f increase per minute
 
     private const float rotAmplitude = 3f;
@@ -100,7 +102,7 @@ public class CarController : MonoBehaviour
 
     private void MoveForward()
     {
-        var movVec = new Vector3(Time.fixedDeltaTime * speedFactor, 0, 0);
+        var movVec = new Vector3(Time.fixedDeltaTime * speedFactorCurrent, 0, 0);
 
         if (IsPlayerCar)
             transform.position += movVec;
