@@ -13,7 +13,8 @@ public class LaneController : MonoBehaviour
     public Transform TerrainPrefab;
 
     public const float laneWidthInWU = 2f;
-    public const float carSpawnOffsetX = 40f;
+    private const float carSpawnOffsetXmin = 40f;
+    private readonly float carSpawnOffsetXmax = terrainLength - 1f;
 
     //Timer
     private const float maxTrafficSpawnDelay = 3f;
@@ -68,8 +69,11 @@ public class LaneController : MonoBehaviour
 
         var pPos = pCar.transform.position;
 
+        var spawnOffset = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, carSpawnOffsetXmin, carSpawnOffsetXmax);
+        spawnOffset = spawnOffset > carSpawnOffsetXmax ? carSpawnOffsetXmax : spawnOffset;
+
         var newTrafficCar = Instantiate(TrafficCar1) as Transform;
-        newTrafficCar.position = new Vector3(pPos.x + carSpawnOffsetX, pPos.y, GetRandomLane());
+        newTrafficCar.position = new Vector3(pPos.x + spawnOffset, pPos.y, GetRandomLane());
     }
 
     private void SpawnNextTerrainChunk(bool first = false)
