@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class RunGUIText : MonoBehaviour
+public class RunGUIDebugText : MonoBehaviour
 {
     public TextMeshProUGUI terminal;
 
@@ -24,7 +24,7 @@ public class RunGUIText : MonoBehaviour
     private void Update()
     {
         CalculateAndDisplayFPSAverage();
-        terminal.text += "\n" + Screen.width + "x" + Screen.height;
+        DisplayFinalResolution();
     }
 
     private void CalculateAndDisplayFPSAverage()
@@ -34,5 +34,10 @@ public class RunGUIText : MonoBehaviour
         var fpsAverage = fpsBuffer.Sum() / fpsBuffer.Count;
 
         terminal.text = "FPS: " + (fpsAverage).ToString("000");
+    }
+
+    private void DisplayFinalResolution()
+    {
+        terminal.text += "\n" + Screen.width + "x" + Screen.height;
     }
 }
