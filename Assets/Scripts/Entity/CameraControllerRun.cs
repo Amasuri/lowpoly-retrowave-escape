@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class CameraControllerRun : MonoBehaviour
 {
+    public const int screenWidthReference = 1080;
+    public const int screenHeightReference = 2340;
+
     public Camera camera;
 
     private readonly Vector3 startRotVec = new Vector3(27, 90, 0);
@@ -20,6 +23,7 @@ public class CameraControllerRun : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        //Screen.SetResolution(screenWidth, screenHeight, true); //---> Devices might downscale automatically. In case of problems, force resolution
         ResetSpeedEffects();
     }
 

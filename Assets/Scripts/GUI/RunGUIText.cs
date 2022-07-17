@@ -24,6 +24,7 @@ public class RunGUIText : MonoBehaviour
     private void Update()
     {
         CalculateAndDisplayFPSAverage();
+        terminal.text += "\n" + Screen.width + "x" + Screen.height;
     }
 
     private void CalculateAndDisplayFPSAverage()
