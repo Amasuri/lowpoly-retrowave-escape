@@ -9,6 +9,9 @@ public class LaneController : MonoBehaviour
 
     private int TimesTerrainWasSpawned;
 
+    static public LaneController current;
+
+    public Transform PlayerCar;
     public Transform TrafficCar1;
     public Transform TerrainPrefab;
 
@@ -21,15 +24,15 @@ public class LaneController : MonoBehaviour
     private float currentTrafficSpawnDelay;
 
     static public bool HasPlayerCollided { get; private set; }
+    public bool HasPlayerBeenSpawned;
 
     // Start is called before the first frame update
     private void Start()
     {
-        HasPlayerCollided = false;
-        currentTrafficSpawnDelay = maxTrafficSpawnDelay;
-        TimesTerrainWasSpawned = 0;
+        current = this;
 
-        SpawnNextTerrainChunk(first: true);
+        HasPlayerBeenSpawned = false;
+        ResetLaneController();
     }
 
     // Update is called once per frame
@@ -57,9 +60,24 @@ public class LaneController : MonoBehaviour
     {
     }
 
+    public void ResetLaneController()
+    {
+        HasPlayerCollided = false;
+        currentTrafficSpawnDelay = maxTrafficSpawnDelay;
+        TimesTerrainWasSpawned = 0;
+
+        SpawnNextTerrainChunk(first: true);
+    }
+
     public static void RecordThatPlayerCollided()
     {
         HasPlayerCollided = true;
+    }
+
+    public void SpawnPlayerCar()
+    {
+        var pCar = Instantiate(PlayerCar) as Transform;
+        HasPlayerBeenSpawned = true;
     }
 
     private void SpawnNewTraffic()
