@@ -73,6 +73,20 @@ public class LaneController : MonoBehaviour
         var spawnOffset = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, carSpawnOffsetXmin, carSpawnOffsetXmax);
         spawnOffset = spawnOffset > carSpawnOffsetXmax ? carSpawnOffsetXmax : spawnOffset;
 
+        //Decide on spawning pattern
+        int chance = Random.Range(0, 100);
+
+        //50% to spawn one car, each 25% to spawn three or four cars on the same row
+        if(chance < 50)
+            SpawnOneCarPerRow(pPos, spawnOffset);
+        else if (chance >= 50 && chance <= 75)
+            SpawnFourCarsPerRow(pPos, spawnOffset);
+        else
+            SpawnThreeCarsPerRow(pPos, spawnOffset);
+    }
+
+    private void SpawnOneCarPerRow(Vector3 pPos, float spawnOffset)
+    {
         //Instantiate
         var newTrafficCar = Instantiate(TrafficCar1) as Transform;
         newTrafficCar.position = new Vector3(pPos.x + spawnOffset, pPos.y, GetRandomLane());
@@ -82,6 +96,55 @@ public class LaneController : MonoBehaviour
         {
             var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
             car.MakeReverse();
+        }
+    }
+
+    private void SpawnFourCarsPerRow(Vector3 pPos, float spawnOffset)
+    {
+        //Get free lane
+        var exitLane = (int)(GetRandomLane()/2);
+
+        //For all five lanes from leftmost to central to rightmost
+        for (int i = -2; i < 2+1; i++)
+        {
+            if (i == exitLane) continue;
+
+            //Instantiate
+            var newTrafficCar = Instantiate(TrafficCar1) as Transform;
+            newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), pPos.y, i * laneWidthInWU);
+
+            //10% chance to get new car be reverse-moving
+            if (Random.Range(0, 100) <= 10)
+            {
+                var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
+                car.MakeReverse();
+            }
+        }
+    }
+
+    private void SpawnThreeCarsPerRow(Vector3 pPos, float spawnOffset)
+    {
+        //Get free lanes (there's 2 of them)
+        var exitLane1 = (int)(GetRandomLane() / 2);
+        var exitLane2 = (int)(GetRandomLane() / 2);
+        while(exitLane1 == exitLane2)
+            exitLane2 = (int)(GetRandomLane() / 2);
+
+        //For all five lanes from leftmost to central to rightmost
+        for (int i = -2; i < 2 + 1; i++)
+        {
+            if (i == exitLane1 || i == exitLane2) continue;
+
+            //Instantiate
+            var newTrafficCar = Instantiate(TrafficCar1) as Transform;
+            newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), pPos.y, i * laneWidthInWU);
+
+            //10% chance to get new car be reverse-moving
+            if (Random.Range(0, 100) <= 10)
+            {
+                var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
+                car.MakeReverse();
+            }
         }
     }
 
