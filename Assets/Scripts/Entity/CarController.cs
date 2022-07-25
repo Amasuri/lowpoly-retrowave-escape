@@ -84,6 +84,14 @@ public class CarController : MonoBehaviour
         CarController.allCars = new List<CarController>();
     }
 
+    static public void DestroyAllCarsBeforePlayButton()
+    {
+        foreach (var car in allCars)
+        {
+            Destroy(car.gameObject, 1f);
+        }
+    }
+
     public void StartChangingLane(bool toLeft = true)
     {
         var dir = toLeft ? 1 : -1;

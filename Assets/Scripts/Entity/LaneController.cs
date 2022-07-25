@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LaneController : MonoBehaviour
 {
+    static public List<Transform> terrainIndex = new List<Transform>();
+
     private readonly Vector3 defaultTerrainPosition = new Vector3(0, 0, -5); //new Vector3(-terrainSpawnOffset, 0, -5);
     private const float terrainLength = 100f; //isn't hooked; change in terrain editor prefab
 
@@ -30,6 +32,7 @@ public class LaneController : MonoBehaviour
     private void Start()
     {
         current = this;
+        terrainIndex = new List<Transform>();
 
         HasPlayerBeenSpawned = false;
         ResetLaneController();
@@ -78,6 +81,16 @@ public class LaneController : MonoBehaviour
     {
         var pCar = Instantiate(PlayerCar) as Transform;
         HasPlayerBeenSpawned = true;
+    }
+
+    public void DestroyAllTerrainAndCarsBeforePlayButton()
+    {
+        CarController.DestroyAllCarsBeforePlayButton();
+
+        foreach (var terr in terrainIndex)
+        {
+            Destroy(terr.gameObject, 1f);
+        }
     }
 
     private void SpawnNewTraffic()
@@ -187,11 +200,13 @@ public class LaneController : MonoBehaviour
         {
             var newTerrainChunk = Instantiate(TerrainPrefab) as Transform;
             newTerrainChunk.position = defaultTerrainPosition + new Vector3(nxtSpwnPosByPlX, 0, 0);
+            terrainIndex.Add(newTerrainChunk);
             Destroy(newTerrainChunk.gameObject, 8f);
         }
 
         var furtherNewTerrainChunk = Instantiate(TerrainPrefab) as Transform;
         furtherNewTerrainChunk.position = defaultTerrainPosition + new Vector3(nxtSpwnPosByPlX + terrainLength, 0, 0);
+        terrainIndex.Add(furtherNewTerrainChunk);
         Destroy(furtherNewTerrainChunk.gameObject, 12f);
 
         TimesTerrainWasSpawned++;

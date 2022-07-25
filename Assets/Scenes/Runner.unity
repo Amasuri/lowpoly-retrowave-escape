@@ -398,6 +398,7 @@ MonoBehaviour:
     type: 3}
   TerrainPrefab: {fileID: 445709947431686073, guid: 51c987c70f28e874f80b5f6e1f455d6a,
     type: 3}
+  HasPlayerBeenSpawned: 0
 --- !u!1 &937753385
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +482,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 799067341}
+        m_TargetAssemblyTypeName: LaneController, Assembly-CSharp
+        m_MethodName: DestroyAllTerrainAndCarsBeforePlayButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 799067341}
         m_TargetAssemblyTypeName: LaneController, Assembly-CSharp
         m_MethodName: SpawnPlayerCar
