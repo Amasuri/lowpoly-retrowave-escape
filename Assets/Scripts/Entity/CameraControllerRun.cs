@@ -9,6 +9,7 @@ public class CameraControllerRun : MonoBehaviour
     public const int screenHeightReference = 2340;
 
     public Camera camera;
+    static public CameraControllerRun current;
 
     private readonly Vector3 startRotVec = new Vector3(27, 90, 0);
     private readonly Vector3 endRotVec = new Vector3(15, 90, 0);
@@ -24,6 +25,7 @@ public class CameraControllerRun : MonoBehaviour
     private void Start()
     {
         //Screen.SetResolution(screenWidth, screenHeight, true); //---> Devices might downscale automatically. In case of problems, force resolution
+        current = this;
         ResetSpeedEffects();
     }
 
@@ -33,7 +35,11 @@ public class CameraControllerRun : MonoBehaviour
         if (LaneController.HasPlayerCollided)
             return;
 
-        ChasePlayerCar();
+        if (LaneController.current.HasPlayerBeenSpawned)
+            ChasePlayerCar();
+        else
+            ChaseConstantPace();
+
         CorrectAngleBasedOnElapsedTime();
         CorrectFoVBasedOnElapsedTime();
         CorrectPosOffsetBasedOnElapsedTime();
@@ -52,6 +58,12 @@ public class CameraControllerRun : MonoBehaviour
 
         if (pCar != null)
             transform.position = pCar.transform.position + currentPosOffset;
+    }
+
+    private void ChaseConstantPace()
+    {
+        var movVec = new Vector3(Time.deltaTime * CarController.speedFactorCurrent, 0, 0);
+        transform.position += movVec;
     }
 
     private void CorrectAngleBasedOnElapsedTime()

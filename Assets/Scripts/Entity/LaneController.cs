@@ -46,18 +46,18 @@ public class LaneController : MonoBehaviour
             SpawnNewTraffic();
         }
 
-        //Terrain spawning (accuracy-dependent, so under fixed update)
-        var pCar = CarController.GetPlayerCar();
+        //Terrain spawning
+        //Bind player position to either current cam or current car
+        MonoBehaviour pCar = CarController.GetPlayerCar();
+        if(!HasPlayerBeenSpawned)
+            pCar = CameraControllerRun.current;
         if (pCar == null)
             return;
+
         var pPos = pCar.transform.position;
 
         if ((pPos.x / terrainLength) > TimesTerrainWasSpawned)
             SpawnNextTerrainChunk();
-    }
-
-    private void FixedUpdate()
-    {
     }
 
     public void ResetLaneController()
@@ -83,7 +83,10 @@ public class LaneController : MonoBehaviour
     private void SpawnNewTraffic()
     {
         //Try to get player car pos safely
-        var pCar = CarController.GetPlayerCar();
+        //Bind player position to either current cam or current car
+        MonoBehaviour pCar = CarController.GetPlayerCar();
+        if (!HasPlayerBeenSpawned)
+            pCar = CameraControllerRun.current;
         if (pCar == null)
             return;
         var pPos = pCar.transform.position;
@@ -108,7 +111,7 @@ public class LaneController : MonoBehaviour
     {
         //Instantiate
         var newTrafficCar = Instantiate(TrafficCar1) as Transform;
-        newTrafficCar.position = new Vector3(pPos.x + spawnOffset, pPos.y, GetRandomLane());
+        newTrafficCar.position = new Vector3(pPos.x + spawnOffset, 0.02f, GetRandomLane());
 
         //10% chance to get new car be reverse-moving
         if (Random.Range(0, 100) <= 10)
@@ -130,7 +133,7 @@ public class LaneController : MonoBehaviour
 
             //Instantiate
             var newTrafficCar = Instantiate(TrafficCar1) as Transform;
-            newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), pPos.y, i * laneWidthInWU);
+            newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), 0.02f, i * laneWidthInWU);
 
             //10% chance to get new car be reverse-moving
             if (Random.Range(0, 100) <= 10)
@@ -156,7 +159,7 @@ public class LaneController : MonoBehaviour
 
             //Instantiate
             var newTrafficCar = Instantiate(TrafficCar1) as Transform;
-            newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), pPos.y, i * laneWidthInWU);
+            newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), 0.02f, i * laneWidthInWU);
 
             //10% chance to get new car be reverse-moving
             if (Random.Range(0, 100) <= 10)
@@ -169,7 +172,11 @@ public class LaneController : MonoBehaviour
 
     private void SpawnNextTerrainChunk(bool first = false)
     {
-        var plCar = CarController.GetPlayerCar();
+        //Bind player position to either current cam or current car
+        MonoBehaviour plCar = CarController.GetPlayerCar();
+        if (!HasPlayerBeenSpawned)
+            plCar = CameraControllerRun.current;
+
         var plPos = new Vector3(0, 0, 0);
         if (plCar != null)
             plPos = plCar.transform.position;

@@ -22,8 +22,11 @@ public class RunTimer : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(IsCounting)
+        if(IsCounting && LaneController.current.HasPlayerBeenSpawned)
             TimeSinceLastRunStartSec = Time.realtimeSinceStartup - startTimeMs;
+
+        if (!LaneController.current.HasPlayerBeenSpawned)
+            TimeSinceLastRunStartSec = 30f;
     }
 
     static public void StartNewCount()
