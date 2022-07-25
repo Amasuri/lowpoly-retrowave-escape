@@ -25,6 +25,7 @@ public class LaneController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        HasPlayerCollided = false;
         currentTrafficSpawnDelay = maxTrafficSpawnDelay;
         TimesTerrainWasSpawned = 0;
 

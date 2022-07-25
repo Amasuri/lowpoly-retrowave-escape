@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RunnerPlayerControls : MonoBehaviour
 {
@@ -16,19 +17,32 @@ public class RunnerPlayerControls : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(!IsMobile)
+        {
+            //Debug reload current scene
+            if (Input.GetKeyDown(KeyCode.P))
+                ResetAndReloadScene();
+        }
+
         if (LaneController.HasPlayerCollided)
             return;
 
         if (IsMobile)
-            DebugMobile_Control();
+            DebugMobile_CarControl();
         else
             PC_CarControl();
+    }
+
+    public static void ResetAndReloadScene()
+    {
+        CarController.ResetAllCarsBeforeSceneWipe();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     /// <summary>
     /// Warning! The control scheme is unpolished. F2 the method when you finish making it as user friendly as possible
     /// </summary>
-    private void DebugMobile_Control()
+    private void DebugMobile_CarControl()
     {
         if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
             return;

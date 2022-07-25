@@ -75,6 +75,15 @@ public class CarController : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Shouldn't be called on scene start, since it resets the player car after it has been set.
+    /// Rather, it should be called before soft scene reload, to wipe the static variable
+    /// </summary>
+    static public void ResetAllCarsBeforeSceneWipe()
+    {
+        CarController.allCars = new List<CarController>();
+    }
+
     public void StartChangingLane(bool toLeft = true)
     {
         var dir = toLeft ? 1 : -1;
