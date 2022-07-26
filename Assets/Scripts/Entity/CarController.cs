@@ -56,6 +56,10 @@ public class CarController : MonoBehaviour
         if (IsPlayerCar)
             LaneController.RecordThatPlayerCollided();
 
+        var sound = gameObject.GetComponent<CarSoundController>();
+        if (sound != null)
+            sound.PlayCollisionSound();
+
         //Jerk the car a but upwards and to the side; add counterforce to it and the other car
         transform.Rotate(new Vector3(10, 0, 0));
         var inertiaSum = startSpeed + speedFactorCurrent;
