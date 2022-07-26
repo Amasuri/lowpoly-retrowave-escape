@@ -45,6 +45,9 @@ public class RunGUIDebugText : MonoBehaviour
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
     {
+        if (LaneController.current == null)
+            return;
+
         if (!LaneController.current.HasPlayerBeenSpawned)
             terminal.text = "";
     }

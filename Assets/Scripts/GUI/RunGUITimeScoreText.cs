@@ -36,6 +36,9 @@ public class RunGUITimeScoreText : MonoBehaviour
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
     {
+        if (LaneController.current == null)
+            return;
+
         if (!LaneController.current.HasPlayerBeenSpawned)
             terminal.text = "";
     }
