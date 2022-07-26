@@ -89,7 +89,8 @@ public class LaneController : MonoBehaviour
 
         foreach (var terr in terrainIndex)
         {
-            Destroy(terr.gameObject, 1f);
+            if(terr != null)
+                Destroy(terr.gameObject, 1f);
         }
     }
 

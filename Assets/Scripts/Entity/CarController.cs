@@ -88,7 +88,8 @@ public class CarController : MonoBehaviour
     {
         foreach (var car in allCars)
         {
-            Destroy(car.gameObject, 1f);
+            if (car != null)
+                Destroy(car.gameObject, 1f);
         }
     }
 
