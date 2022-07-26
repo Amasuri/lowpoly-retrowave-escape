@@ -11,11 +11,19 @@ public class RunGUITimeScoreText : MonoBehaviour
     private void Start()
     {
         terminal = GetComponent<TextMeshProUGUI>();
+
+        WipeTerminalTextIfPlayerHasntBeenSpawned();
     }
 
     // Update is called once per frame
     private void Update()
     {
+        if(!LaneController.current.HasPlayerBeenSpawned)
+        {
+            WipeTerminalTextIfPlayerHasntBeenSpawned();
+            return;
+        }
+
         int score = 0; //score is STUB. score calculation to be done...
         int seconds = (int)RunTimer.TimeSinceLastRunStartSec;
 
@@ -24,5 +32,11 @@ public class RunGUITimeScoreText : MonoBehaviour
 
         terminal.text = dispMinutes.ToString("00") + ":" + dispSeconds.ToString("00");
         terminal.text += "\n" + score.ToString("00000");
+    }
+
+    private void WipeTerminalTextIfPlayerHasntBeenSpawned()
+    {
+        if (!LaneController.current.HasPlayerBeenSpawned)
+            terminal.text = "";
     }
 }

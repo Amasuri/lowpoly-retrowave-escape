@@ -18,6 +18,7 @@ public class RunGUIDebugText : MonoBehaviour
         fpsBuffer = new Queue<float>(fpsBufferSize);
         for (int i = 0; i < fpsBufferSize; i++)
             fpsBuffer.Enqueue(60f);
+        WipeTerminalTextIfPlayerHasntBeenSpawned();
     }
 
     // Update is called once per frame
@@ -25,6 +26,7 @@ public class RunGUIDebugText : MonoBehaviour
     {
         CalculateAndDisplayFPSAverage();
         DisplayFinalResolution();
+        WipeTerminalTextIfPlayerHasntBeenSpawned();
     }
 
     private void CalculateAndDisplayFPSAverage()
@@ -39,5 +41,11 @@ public class RunGUIDebugText : MonoBehaviour
     private void DisplayFinalResolution()
     {
         terminal.text += "\n" + Screen.width + "x" + Screen.height;
+    }
+
+    private void WipeTerminalTextIfPlayerHasntBeenSpawned()
+    {
+        if (!LaneController.current.HasPlayerBeenSpawned)
+            terminal.text = "";
     }
 }
