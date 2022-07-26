@@ -17,13 +17,6 @@ public class RunnerPlayerControls : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(!IsMobile)
-        {
-            //Debug reload current scene
-            if (Input.GetKeyDown(KeyCode.P))
-                ResetAndReloadScene();
-        }
-
         if (LaneController.HasPlayerCollided)
             return;
 
@@ -31,12 +24,6 @@ public class RunnerPlayerControls : MonoBehaviour
             DebugMobile_CarControl();
         else
             PC_CarControl();
-    }
-
-    public static void ResetAndReloadScene()
-    {
-        CarController.ResetAllCarsBeforeSceneWipe();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     /// <summary>
