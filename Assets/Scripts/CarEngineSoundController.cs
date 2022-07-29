@@ -28,7 +28,7 @@ public class CarEngineSoundController : MonoBehaviour
 
         var maxPitchDelta = endPitch - startPitch;
 
-        //Remaps elapsed time from time range 0-60s to camera FoV range 0-15 degrees delta
+        //Remaps elapsed time from time range 0-60s to engine pitch range 0-1.25f delta
         var currentPitchDelta = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, maxPitchDelta);
         var resultPitch = startPitch + currentPitchDelta;
         if (currentPitchDelta >= maxPitchDelta)
