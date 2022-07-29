@@ -287,6 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisImage: {fileID: 48485430}
   thisButton: {fileID: 48485429}
+  IsTitleButton: 0
 --- !u!1 &217560059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,6 +1051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisImage: {fileID: 937753388}
   thisButton: {fileID: 937753387}
+  IsTitleButton: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,6 +1896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terminal: {fileID: 0}
+  IsTitleText: 1
 --- !u!1 &1979193198
 GameObject:
   m_ObjectHideFlags: 0
