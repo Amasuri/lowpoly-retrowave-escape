@@ -42,13 +42,13 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 1d3ba4493f36c1e40bcb3acdb2fe584c, type: 2}
-  m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeDistance: 0
+  m_TreeBillboardDistance: 5
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 25
-  m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
+  m_DetailObjectDensity: 0
+  m_HeightmapPixelError: 15
   m_SplatMapDistance: 25
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 0
