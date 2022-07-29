@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarSoundController : MonoBehaviour
+public class CarCollisionSoundController : MonoBehaviour
 {
     public bool IsPlayerCar;
 

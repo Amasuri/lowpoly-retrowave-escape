@@ -56,7 +56,7 @@ public class CarController : MonoBehaviour
         if (IsPlayerCar)
             LaneController.RecordThatPlayerCollided();
 
-        var sound = gameObject.GetComponent<CarSoundController>();
+        var sound = gameObject.GetComponent<CarCollisionSoundController>();
         if (sound != null)
             sound.PlayCollisionSound();
 
