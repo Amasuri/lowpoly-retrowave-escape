@@ -24,14 +24,14 @@ public class RunGUITimeScoreText : MonoBehaviour
             return;
         }
 
-        int score = 0; //score is STUB. score calculation to be done...
+        int score = ScoreCounter.current.TotalScore; //score is STUB. score calculation to be done...
         int seconds = (int)RunTimer.TimeSinceLastRunStartSec;
 
         int dispSeconds = seconds % 60;
         int dispMinutes = seconds / 60;
 
         terminal.text = dispMinutes.ToString("00") + ":" + dispSeconds.ToString("00");
-        terminal.text += "\n" + score.ToString("00000");
+        terminal.text += "\n" + score.ToString("000000");
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
