@@ -441,7 +441,7 @@ Transform:
   - {fileID: 1898262243}
   - {fileID: 1574093168}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &467522057
 GameObject:
@@ -634,7 +634,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &799067339
 GameObject:
@@ -731,7 +731,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &853108699
 AudioSource:
@@ -1133,10 +1133,9 @@ Transform:
   m_LocalRotation: {x: 0.16507079, y: 0.6875694, z: -0.16507079, w: 0.6875694}
   m_LocalPosition: {x: -5, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1125911213}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 27, y: 90, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -1325,11 +1324,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125911212}
-  m_LocalRotation: {x: 0.976296, y: 0, z: 0, w: 0.2164397}
-  m_LocalPosition: {x: 0, y: 1000, z: 1000}
+  m_LocalRotation: {x: 0.7069991, y: -0.01234065, z: -0.7069991, w: -0.01234065}
+  m_LocalPosition: {x: 1339.9971, y: 441.01605, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 963194228}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 155, y: 0, z: 0}
 --- !u!108 &1125911214
@@ -1458,7 +1457,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1346352552
 GameObject:
@@ -1635,7 +1634,7 @@ Transform:
   - {fileID: 1346352553}
   - {fileID: 1799379659}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799379658
 GameObject:
