@@ -51,9 +51,14 @@ public class CarController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Make sure you write only for car collisions
-        if (collision.gameObject.GetComponent<CarController>() == null)
-            return;
+        if (collision.gameObject.GetComponent<CarController>() != null)
+            HandleCarToCarCollision(collision);
+        else if (collision.gameObject.GetComponent<TerrainData>() != null)
+            HandleCarToTerrainCollision(collision);
+    }
 
+    private void HandleCarToCarCollision(Collision collision)
+    {
         HasThisCarCollided = true;
         if (IsPlayerCar)
             LaneController.RecordThatPlayerCollided();
@@ -68,6 +73,23 @@ public class CarController : MonoBehaviour
         var xInertia = IsPlayerCar ? -inertiaSum : inertiaSum;
         rigidbody.AddForce(new Vector3(xInertia, 2, Random.Range(-1f, 1f)), ForceMode.Impulse);
         collision.rigidbody.AddForce(new Vector3(-xInertia, 2, Random.Range(-1f, 1f)), ForceMode.Impulse);
+    }
+
+    private void HandleCarToTerrainCollision(Collision collision)
+    {
+        var terr = collision.gameObject.GetComponent<TerrainData>();
+
+        //Normal terrain just acts as usual. It's outer terrain that needs action
+        if (!terr.IsOuterTerrain || HasThisCarCollided)
+            return;
+
+        HasThisCarCollided = true;
+        if (IsPlayerCar)
+            LaneController.RecordThatPlayerCollided();
+
+        var inertiaSum = startSpeed + speedFactorCurrent;
+        var xInertia = inertiaSum;//IsPlayerCar ? inertiaSum : -inertiaSum;
+        rigidbody.AddForce(new Vector3(xInertia, 2, transform.position.z), ForceMode.Impulse);
     }
 
     static public CarController GetPlayerCar()
