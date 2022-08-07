@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8197258808060600207}
   - component: {fileID: 930626275114573527}
   - component: {fileID: 1159006321555852687}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Kei
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5632943034744302186}
   - component: {fileID: 2781134211166200871}
   - component: {fileID: 5805174417833134652}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Back_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2751887459029396318}
   - component: {fileID: 2794674867551722667}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ Light:
   m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 4038492824300915487}
   - component: {fileID: 4609451296938390842}
   - component: {fileID: 2848240234088349463}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 4279511856897704582}
   - component: {fileID: 3705471863718397018}
   - component: {fileID: 3131360810831858601}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +477,7 @@ GameObject:
   - component: {fileID: 7241894998759732730}
   - component: {fileID: 1284916374026890668}
   - component: {fileID: 3261960428927081346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CarModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -669,7 +669,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7114279385653207241}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TrafficCar1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 6395566422487491743}
   - component: {fileID: 672467858107624411}
   - component: {fileID: 9213340996974896580}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Back_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

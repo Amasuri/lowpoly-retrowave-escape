@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5352541319444265044}
   - component: {fileID: 4726747482115092201}
   - component: {fileID: 8228797519533919918}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mazda
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5141840434997195053}
   - component: {fileID: 8375064164780836394}
   - component: {fileID: 6170237753541781711}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front_Left.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3424527620398317824}
   - component: {fileID: 8600850649513305608}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EngineStartSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 1257679313485653072}
   - component: {fileID: 5014910171646212822}
   - component: {fileID: 5747695589184065475}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front_Right.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 3689833350494323773}
   - component: {fileID: 352570798563739577}
   - component: {fileID: 7021440175913378767}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Back_Right.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,7 +507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2869294952768805820}
   - component: {fileID: 4765957104052745311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +577,7 @@ Light:
   m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   m_RenderingLayerMask: 1
   m_Lightmapping: 2
   m_LightShadowCasterMode: 0
@@ -600,7 +600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5285416843566695121}
   - component: {fileID: 303198109776861132}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 4785948201954636167}
   - component: {fileID: 3372514380798653589}
   - component: {fileID: 1502417163288167327}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EngineActive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +837,7 @@ GameObject:
   - component: {fileID: 1586730210316290457}
   - component: {fileID: 6650994824748420989}
   - component: {fileID: 3066653904815978568}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Back_Left.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -935,7 +935,7 @@ GameObject:
   - component: {fileID: 9203905425981149035}
   - component: {fileID: 9203905425981149034}
   - component: {fileID: 3672867332312704188}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
