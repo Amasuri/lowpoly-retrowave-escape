@@ -51,12 +51,12 @@ Shader "Custom/TransparentTerrainShader"
        }
    
        Dependency "AddPassShader" = "Hidden/TerrainEngine/Splatmap/Diffuse-AddPass"
-       Dependency "BaseMapShader" = "Diffuse"
+       Dependency "BaseMapShader" = "Standard"
        Dependency "Details0"      = "Hidden/TerrainEngine/Details/Vertexlit"
        Dependency "Details1"      = "Hidden/TerrainEngine/Details/WavingDoublePass"
        Dependency "Details2"      = "Hidden/TerrainEngine/Details/BillboardWavingDoublePass"
        Dependency "Tree0"         = "Hidden/TerrainEngine/BillboardTree"
    
-       Fallback "Nature/Terrain/Diffuse"
+       Fallback "Nature/Terrain/Standard"
 
   }
