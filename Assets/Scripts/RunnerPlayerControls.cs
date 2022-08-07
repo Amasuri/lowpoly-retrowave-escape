@@ -38,9 +38,9 @@ public class RunnerPlayerControls : MonoBehaviour
         if (touch.phase != TouchPhase.Moved)
             return;
 
-        if (touch.deltaPosition.x > 0f)
+        if (touch.deltaPosition.x < 0f)
             CarController.GetPlayerCar().StartChangingLane(toLeft: true);
-        else if (touch.deltaPosition.x < 0f)
+        else if (touch.deltaPosition.x > 0f)
             CarController.GetPlayerCar().StartChangingLane(toLeft: false);
     }
 
