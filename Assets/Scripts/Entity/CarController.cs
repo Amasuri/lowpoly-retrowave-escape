@@ -10,6 +10,7 @@ public class CarController : MonoBehaviour
     public Rigidbody rigidbody;
 
     private float TurningGoalLane = 0f;
+    private readonly float[] PossibleLanes = { -4f, -2f, 0f, 2f, 4f };
 
     public bool IsReverse { get; private set; }
     public bool IsPlayerCar;
@@ -23,6 +24,7 @@ public class CarController : MonoBehaviour
     static private float speedIncrease => RunTimer.TimeSinceLastRunStartSec / 1f; //approx 60f increase per minute
 
     private const float rotAmplitude = 3f;
+    private const int reverseTurnSpeed = 5; //bigger => faster. 10 is slow, how is was in alpha, 5 is fast
 
     // Start is called before the first frame update
     private void Start()
@@ -115,7 +117,7 @@ public class CarController : MonoBehaviour
     {
         //Smooth lane change
         var signedDelta = transform.position.z - TurningGoalLane;
-        transform.position += new Vector3(0, 0, -signedDelta / 10);
+        transform.position += new Vector3(0, 0, -signedDelta / reverseTurnSpeed);
 
         //Smooth rotation dip
         var rot = Mathf.Cos(signedDelta + (1 * Mathf.Sign(signedDelta)));
