@@ -45,6 +45,7 @@ public class RunGUIDebugText : MonoBehaviour
     {
         terminal.text += "\n" + Screen.width + "x" + Screen.height;
         terminal.text += "    CC: " + ScoreCounter.current.GetCloseCallTimesDebug();
+        terminal.text += "\n                  " + ScoreCounter.current.GetAllCloseCallDebug().ToString("000000");
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
