@@ -11,6 +11,8 @@ public class RunGUIDebugText : MonoBehaviour
     private const int fpsBufferSize = 100;
     private Queue<float> fpsBuffer;
 
+    private const bool DEBUG = true;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -25,7 +27,7 @@ public class RunGUIDebugText : MonoBehaviour
     private void Update()
     {
         CalculateAndDisplayFPSAverage();
-        DisplayFinalResolution();
+        DisplayFinalResAndCloseCallTimes();
         WipeTerminalTextIfPlayerHasntBeenSpawned();
     }
 
@@ -38,9 +40,10 @@ public class RunGUIDebugText : MonoBehaviour
         terminal.text = "FPS: " + (fpsAverage).ToString("000");
     }
 
-    private void DisplayFinalResolution()
+    private void DisplayFinalResAndCloseCallTimes()
     {
         terminal.text += "\n" + Screen.width + "x" + Screen.height;
+        terminal.text += "    CC: " + ScoreCounter.current.GetCloseCallTimes();
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()

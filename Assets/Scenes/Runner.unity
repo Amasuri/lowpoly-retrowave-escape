@@ -501,7 +501,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'NaN x NaN
+  m_text: 'NaN x NaN CC: NaN
 
     FPS: NaN'
   m_isRightToLeft: 0
