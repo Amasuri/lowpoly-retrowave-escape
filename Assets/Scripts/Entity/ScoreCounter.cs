@@ -30,6 +30,7 @@ public class ScoreCounter : MonoBehaviour
     public void Reset()
     {
         CloseCallTimes = 0;
+        CloseCallEvent.OnCloseCall += IncreaseCloseCallTimes;
     }
 
     private void IncreaseCloseCallTimes()
