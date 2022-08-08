@@ -14,13 +14,22 @@ public class CarEngineSoundController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        soundPlayer.pitch = startPitch;
+        if(isPlayerCar)
+            soundPlayer.pitch = startPitch;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if(LaneController.HasPlayerCollided)
+        if (isPlayerCar)
+            ControlPlayerEngine();
+        else
+            ControlTrafficEngine();
+    }
+
+    private void ControlPlayerEngine()
+    {
+        if (LaneController.HasPlayerCollided)
         {
             soundPlayer.enabled = false;
             return;
@@ -35,5 +44,11 @@ public class CarEngineSoundController : MonoBehaviour
             resultPitch = endPitch;
 
         soundPlayer.pitch = resultPitch;
+    }
+
+    private void ControlTrafficEngine()
+    {
+        if(transform.parent.gameObject.GetComponent<CarController>().HasThisCarCollided)
+            soundPlayer.enabled = false;
     }
 }

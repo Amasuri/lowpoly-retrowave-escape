@@ -483,6 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8201791220063024375}
+  - component: {fileID: 3701393601730671942}
   - component: {fileID: 345073657698590539}
   m_Layer: 6
   m_Name: EngineActive
@@ -505,6 +506,20 @@ Transform:
   m_Father: {fileID: 2868749481309469739}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3701393601730671942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4704793301661196177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4214a92b2dcdf654ca28c494d78f29e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundPlayer: {fileID: 345073657698590539}
+  isPlayerCar: 0
 --- !u!82 &345073657698590539
 AudioSource:
   m_ObjectHideFlags: 0
