@@ -167,9 +167,9 @@ public class CarController : MonoBehaviour
         {
             var movVec = new Vector3(Time.fixedDeltaTime * startSpeed, 0, 0);
             if(!IsReverse)
-                transform.position += movVec;
+                transform.parent.position += movVec;
             else
-                transform.position -= movVec;
+                transform.parent.position -= movVec;
         }
     }
 }
