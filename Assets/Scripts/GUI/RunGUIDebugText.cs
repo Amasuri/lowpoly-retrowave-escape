@@ -38,12 +38,13 @@ public class RunGUIDebugText : MonoBehaviour
         var fpsAverage = fpsBuffer.Sum() / fpsBuffer.Count;
 
         terminal.text = "FPS: " + (fpsAverage).ToString("000");
+        terminal.text += "       " + ScoreCounter.current.GetLastCloseCallDebug().ToString("0000");
     }
 
     private void DisplayFinalResAndCloseCallTimes()
     {
         terminal.text += "\n" + Screen.width + "x" + Screen.height;
-        terminal.text += "    CC: " + ScoreCounter.current.GetCloseCallTimes();
+        terminal.text += "    CC: " + ScoreCounter.current.GetCloseCallTimesDebug();
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()

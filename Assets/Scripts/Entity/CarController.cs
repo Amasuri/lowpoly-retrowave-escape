@@ -19,8 +19,8 @@ public class CarController : MonoBehaviour
     public bool HasThisCarCollided { get; private set; }
 
     static public float speedFactorCurrent => (startSpeed + speedIncrease) > speedLimit ? speedLimit : (startSpeed + speedIncrease); //not pure speed because delta * speedfactor
-    private const float startSpeed = 15f;
-    private const float speedLimit = 45f; //30s limit; 60s would be ~75f
+    public const float startSpeed = 15f;
+    public const float speedLimit = 45f; //30s limit; 60s would be ~75f
     static private float speedIncrease => RunTimer.TimeSinceLastRunStartSec / 1f; //approx 60f increase per minute
 
     private const float rotAmplitude = 3f;
