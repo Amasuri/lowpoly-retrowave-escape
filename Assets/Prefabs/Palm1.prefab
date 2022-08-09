@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8661605844793007879}
   - component: {fileID: 2242957219344879848}
   - component: {fileID: 8714892282287252685}
+  - component: {fileID: 1198907015288905898}
   m_Layer: 0
   m_Name: Bark_1
   m_TagString: Untagged
@@ -82,6 +83,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1198907015288905898
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3878820295190348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.002637533, y: 0.0025819074, z: 0.03222777}
+  m_Center: {x: -0.000033046672, y: 0.00006725336, z: 0.012130859}
 --- !u!1 &2808991822712939611
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +273,7 @@ GameObject:
   - component: {fileID: 8670810532660324694}
   - component: {fileID: 6664773573626190968}
   - component: {fileID: 2631392962159645488}
+  - component: {fileID: 8714592562044907619}
   m_Layer: 0
   m_Name: Bark_2
   m_TagString: Untagged
@@ -330,6 +345,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8714592562044907619
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5473511683504114681}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0027155806, y: 0.0026069304, z: 0.035728298}
+  m_Center: {x: -0.00003364881, y: 0.000054721164, z: 0.013857331}
 --- !u!1 &6607912787272831125
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +369,7 @@ GameObject:
   - component: {fileID: 3790032238265992174}
   - component: {fileID: 2912296879988887222}
   - component: {fileID: 6926083880828291895}
+  - component: {fileID: 4308990012475617294}
   m_Layer: 0
   m_Name: Bark_4
   m_TagString: Untagged
@@ -412,6 +441,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4308990012475617294
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6607912787272831125}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.004861986, y: 0.0041765785, z: 0.046374187}
+  m_Center: {x: 0.0010903395, y: 0.0008395656, z: 0.01918028}
 --- !u!1 &6677412175590436545
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,6 +548,7 @@ GameObject:
   - component: {fileID: 3108952537280062003}
   - component: {fileID: 4378848941942120515}
   - component: {fileID: 6779353695507532315}
+  - component: {fileID: 4574719906950799329}
   m_Layer: 0
   m_Name: Bark_3
   m_TagString: Untagged
@@ -577,6 +620,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4574719906950799329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6926057632292694029}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0022567692, y: 0.0026069304, z: 0.0412567}
+  m_Center: {x: 0.0001957619, y: 0.000054725486, z: 0.01662153}
 --- !u!1 &7461049704532674682
 GameObject:
   m_ObjectHideFlags: 0
