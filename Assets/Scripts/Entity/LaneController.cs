@@ -128,7 +128,7 @@ public class LaneController : MonoBehaviour
         //Try to get player car pos safely
         //Bind player position to either current cam or current car
         MonoBehaviour pCar = CarController.GetPlayerCar();
-        if (!HasPlayerBeenSpawned)
+        if (!HasPlayerBeenSpawned || HasPlayerCollided)
             pCar = CameraControllerRun.current;
         if (pCar == null)
             return;
@@ -137,6 +137,13 @@ public class LaneController : MonoBehaviour
         //Spawn offset is calculated depending on current time, but no more than max spawn offset
         var spawnOffset = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, carSpawnOffsetXmin, carSpawnOffsetXmax);
         spawnOffset = spawnOffset > carSpawnOffsetXmax ? carSpawnOffsetXmax : spawnOffset;
+
+        //If player has collided, spawn cars not up ahead, but behind
+        if (HasPlayerCollided)
+        {
+            spawnOffset = -spawnOffset;
+            Debug.Log("Spawning behind!");
+        }
 
         //Decide on spawning pattern
         int chance = Random.Range(0, 100);
