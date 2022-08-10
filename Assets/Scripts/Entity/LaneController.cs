@@ -65,6 +65,8 @@ public class LaneController : MonoBehaviour
 
     public void ResetLaneController()
     {
+        PlayerCrashEvent.OnPlayerCrash += SpawnPersistentTerrainOnPlayerCrash;
+
         HasPlayerCollided = false;
         currentTrafficSpawnDelay = maxTrafficSpawnDelay;
         TimesTerrainWasSpawned = 0;
@@ -74,6 +76,8 @@ public class LaneController : MonoBehaviour
 
     public static void RecordThatPlayerCollided()
     {
+        //Order of call is such that it first does things on crash, and then records the crash
+        PlayerCrashEvent.CallPlayerCrashEvent();
         HasPlayerCollided = true;
     }
 
@@ -213,8 +217,41 @@ public class LaneController : MonoBehaviour
         TimesTerrainWasSpawned++;
     }
 
+    private void SpawnPersistentTerrainOnPlayerCrash()
+    {
+        //Destroy "unpersitent" terrain
+        foreach (var terrain in terrainIndex)
+        {
+            if(terrain != null)
+                Destroy(terrain.gameObject, 1f);
+        }
+
+        //Bind player position to current car
+        MonoBehaviour plCar = CarController.GetPlayerCar();
+        var plPos = plCar.transform.position;
+
+        var nxtSpwnPosByPlX = ((int)plPos.x / (int)terrainLength) * terrainLength;
+
+        for (int i = -1; i <= 2; i++)
+        {
+            var newTerrainChunk = Instantiate(TerrainPrefab) as Transform;
+            newTerrainChunk.position = defaultTerrainPosition + new Vector3(nxtSpwnPosByPlX + terrainLength * i, 0, 0);
+            terrainIndex.Add(newTerrainChunk);
+        }
+    }
+
     private float GetRandomLane()
     {
         return laneWidthInWU * Random.Range(-2, 2+1);
+    }
+
+    private void OnDisable()
+    {
+        PlayerCrashEvent.OnPlayerCrash -= SpawnPersistentTerrainOnPlayerCrash;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerCrashEvent.OnPlayerCrash -= SpawnPersistentTerrainOnPlayerCrash;
     }
 }
