@@ -23,7 +23,10 @@ public class LaneController : MonoBehaviour
 
     //Timer
     private const float maxTrafficSpawnDelay = 3f;
-    private float currentTrafficSpawnDelay;
+    private float currentTrafficSpawnDelayDecrease => MathHelper.RemapAndLimitToRange(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, 1.5f);
+    private float currentTrafficSpawnDelay => maxTrafficSpawnDelay - currentTrafficSpawnDelayDecrease; //currently the range is 3s..2s
+
+    private float leftBeforeNextTrafficSpawn;
 
     /// <summary>
     /// Calculates destroy time based on speed (and thus, time needed to travel one chunk distance).
@@ -53,10 +56,11 @@ public class LaneController : MonoBehaviour
     private void Update()
     {
         //Traffic spawning
-        currentTrafficSpawnDelay -= Time.deltaTime;
-        if(currentTrafficSpawnDelay <= 0f)
+        leftBeforeNextTrafficSpawn -= Time.deltaTime;
+        if(leftBeforeNextTrafficSpawn <= 0f)
         {
-            currentTrafficSpawnDelay = maxTrafficSpawnDelay;
+            leftBeforeNextTrafficSpawn = currentTrafficSpawnDelay;
+            Debug.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
             SpawnNewTraffic();
         }
 
@@ -80,7 +84,8 @@ public class LaneController : MonoBehaviour
     public void ResetLaneController()
     {
         HasPlayerCollided = false;
-        currentTrafficSpawnDelay = maxTrafficSpawnDelay;
+        leftBeforeNextTrafficSpawn = currentTrafficSpawnDelay;
+        Debug.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
         TimesTerrainWasSpawned = 0;
 
         SpawnNextTerrainChunk(first: true);
