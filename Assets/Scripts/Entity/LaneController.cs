@@ -263,7 +263,7 @@ public class LaneController : MonoBehaviour
             debugActualSpawnTime = dynamicTerrainChunkDestroyTimeS;
         }
 
-        Debug.Log(maxTerrainChunkDestroyTimeS +"* ("+CarController.startSpeed +"/"+ CarController.speedFactorCurrent+")"+
+        Debug.Log("Terrain spawn info: "+maxTerrainChunkDestroyTimeS +"* ("+CarController.startSpeed +"/"+ CarController.speedFactorCurrent+")"+
             "="+ dynamicTerrainChunkDestroyTimeS + "(actual:" + debugActualSpawnTime + ") ("+RunTimer.TimeSinceLastRunStartSec+")s");
 
         TimesTerrainWasSpawned++;

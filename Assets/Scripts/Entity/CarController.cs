@@ -35,7 +35,7 @@ public class CarController : MonoBehaviour
 
         //Make sure passing cars get KO'd
         if (!IsPlayerCar)
-            Destroy(gameObject, 15);
+            Destroy(gameObject, 15f); //15 default, 10-12f they sometimes disappear in the sky after hit & flying from back to front (not as fun to see them fly)
 
         //10% chance to get new car be reverse-moving
         if (Random.Range(0, 100) <= 10)
@@ -183,5 +183,11 @@ public class CarController : MonoBehaviour
             else
                 transform.parent.position -= movVec;
         }
+    }
+
+    private void OnDestroy()
+    {
+        allCars.Remove(this);
+        Debug.Log("Car despawned! Cars left: " + allCars.Count);
     }
 }
