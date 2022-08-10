@@ -25,12 +25,23 @@ public class LaneController : MonoBehaviour
     private const float maxTrafficSpawnDelay = 3f;
     private float currentTrafficSpawnDelay;
 
+    /// <summary>
+    /// Calculates destroy time based on speed (and thus, time needed to travel one chunk distance).
+    /// Max time is 12(+1)s, meanwhile max and min speed are 45 and 15 units, meaning 45/15 = 3 relation.
+    /// By this logic, minimum destruction time is 12/3 = 4(+1)s
+    /// </summary>
+    private float dynamicTerrainChunkDestroyTimeS => 1f + maxTerrainChunkDestroyTimeS * (CarController.startSpeed / CarController.speedFactorCurrent); //Car
+    private const float firstTerrainChunkDestroyTimeS = 8f; //first spawned, right after player spawn
+    private const float maxTerrainChunkDestroyTimeS = 12f; //by inverse relation, min time would be 12/3 = 4f
+
     static public bool HasPlayerCollided { get; private set; }
     public bool HasPlayerBeenSpawned;
 
     // Start is called before the first frame update
     private void Start()
     {
+        PlayerCrashEvent.OnPlayerCrash += SpawnPersistentTerrainOnPlayerCrash;
+
         current = this;
         terrainIndex = new List<Transform>();
 
@@ -63,10 +74,11 @@ public class LaneController : MonoBehaviour
             SpawnNextTerrainChunk();
     }
 
+    /// <summary>
+    /// It's also called on PlayButton as well as Scene start, so keep that in mind.
+    /// </summary>
     public void ResetLaneController()
     {
-        PlayerCrashEvent.OnPlayerCrash += SpawnPersistentTerrainOnPlayerCrash;
-
         HasPlayerCollided = false;
         currentTrafficSpawnDelay = maxTrafficSpawnDelay;
         TimesTerrainWasSpawned = 0;
@@ -206,13 +218,28 @@ public class LaneController : MonoBehaviour
             var newTerrainChunk = Instantiate(TerrainPrefab) as Transform;
             newTerrainChunk.position = defaultTerrainPosition + new Vector3(nxtSpwnPosByPlX, 0, 0);
             terrainIndex.Add(newTerrainChunk);
-            Destroy(newTerrainChunk.gameObject, 8f);
+            Destroy(newTerrainChunk.gameObject, firstTerrainChunkDestroyTimeS);
         }
 
         var furtherNewTerrainChunk = Instantiate(TerrainPrefab) as Transform;
         furtherNewTerrainChunk.position = defaultTerrainPosition + new Vector3(nxtSpwnPosByPlX + terrainLength, 0, 0);
         terrainIndex.Add(furtherNewTerrainChunk);
-        Destroy(furtherNewTerrainChunk.gameObject, 12f);
+
+        //Fix for the bug when on changed state (camera->car-based spawn) next spawn is based off old values for some reason
+        var debugActualSpawnTime = maxTerrainChunkDestroyTimeS;
+        if (nxtSpwnPosByPlX <= terrainLength * 3)
+        {
+            Destroy(furtherNewTerrainChunk.gameObject, maxTerrainChunkDestroyTimeS);
+            debugActualSpawnTime = maxTerrainChunkDestroyTimeS;
+        }
+        else
+        {
+            Destroy(furtherNewTerrainChunk.gameObject, dynamicTerrainChunkDestroyTimeS);
+            debugActualSpawnTime = dynamicTerrainChunkDestroyTimeS;
+        }
+
+        Debug.Log(maxTerrainChunkDestroyTimeS +"* ("+CarController.startSpeed +"/"+ CarController.speedFactorCurrent+")"+
+            "="+ dynamicTerrainChunkDestroyTimeS + "(actual:" + debugActualSpawnTime + ") ("+RunTimer.TimeSinceLastRunStartSec+")s");
 
         TimesTerrainWasSpawned++;
     }
