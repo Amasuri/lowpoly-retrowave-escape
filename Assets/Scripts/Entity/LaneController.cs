@@ -141,13 +141,15 @@ public class LaneController : MonoBehaviour
         //Decide on spawning pattern
         int chance = Random.Range(0, 100);
 
-        //50% to spawn one car, each 25% to spawn three or four cars on the same row
-        if(chance < 50)
+        //50% to spawn one car, each 25% to spawn three, 15% triangular or 10% four cars on the same row
+        if (chance < 50)
             SpawnOneCarPerRow(pPos, spawnOffset);
-        else if (chance >= 50 && chance <= 75)
-            SpawnFourCarsPerRow(pPos, spawnOffset);
-        else
+        else if (chance >= 50 && chance < 75)
             SpawnThreeCarsPerRow(pPos, spawnOffset);
+        else if (chance >= 75 && chance < 90)
+            SpawnTriangularRow(pPos, spawnOffset);
+        else if (chance >= 90)
+            SpawnFourCarsPerRow(pPos, spawnOffset);
     }
 
     private void SpawnOneCarPerRow(Vector3 pPos, float spawnOffset)
@@ -206,6 +208,36 @@ public class LaneController : MonoBehaviour
             //Instantiate
             var newTrafficCar = Instantiate(TrafficCar1) as Transform;
             newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), 0.02f, i * laneWidthInWU);
+
+            //10% chance to get new car be reverse-moving
+            if (Random.Range(0, 100) <= 10)
+            {
+                var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
+                car.MakeReverse();
+            }
+        }
+    }
+
+    private void SpawnTriangularRow(Vector3 pPos, float spawnOffset)
+    {
+        //Not specifically a problematic formation, but there could be problems if player wanted to go between the cars
+        BanReverseCarSpawn();
+
+        //If we count the whole formation; there's only three lanes available for car spawn;
+        //that means only the left and center ones are eligible
+        var formationStartLane = Random.Range(-2, 0 + 1) * laneWidthInWU;
+
+        //Formation is continious: it means that there are no gaps between cars of the formation; but there's only three of them
+        for (int i = 0; i < 2 + 1; i++)
+        {
+            //Lead car is up ahead
+            var leadCarOffset = 0f;
+            if (i == 1)
+                leadCarOffset = spawnOffset / 5;
+
+            //Instantiate
+            var newTrafficCar = Instantiate(TrafficCar1) as Transform;
+            newTrafficCar.position = new Vector3(pPos.x + spawnOffset + leadCarOffset + Random.Range(-1f, 1f), 0.02f, formationStartLane + i * laneWidthInWU);
 
             //10% chance to get new car be reverse-moving
             if (Random.Range(0, 100) <= 10)
