@@ -68,4 +68,14 @@ public class ScoreCounter : MonoBehaviour
         LastCloseCallDebug = CloseCallScoreCurrentOnetimeBonus;
         CloseCallList.Add(CloseCallScoreCurrentOnetimeBonus);
     }
+
+    private void OnDestroy()
+    {
+        CloseCallEvent.OnCloseCall -= RegisterNewCloseCall;
+    }
+
+    private void OnDisable()
+    {
+        CloseCallEvent.OnCloseCall -= RegisterNewCloseCall;
+    }
 }
