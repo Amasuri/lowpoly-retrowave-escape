@@ -23,8 +23,8 @@ public class LaneController : MonoBehaviour
 
     //Timer
     private const float maxTrafficSpawnDelay = 3f;
-    private float currentTrafficSpawnDelayDecrease => MathHelper.RemapAndLimitToRange(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, 1.5f);
-    private float currentTrafficSpawnDelay => maxTrafficSpawnDelay - currentTrafficSpawnDelayDecrease; //currently the range is 3s..2s
+    private float currentTrafficSpawnDelayDecrease => MathHelper.RemapAndLimitToRange(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, 2f);
+    private float currentTrafficSpawnDelay => maxTrafficSpawnDelay - currentTrafficSpawnDelayDecrease; //currently the range is 3s..1s
 
     private float leftBeforeNextTrafficSpawn;
 
