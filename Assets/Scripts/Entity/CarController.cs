@@ -38,7 +38,7 @@ public class CarController : MonoBehaviour
             Destroy(gameObject, 15f); //15 default, 10-12f they sometimes disappear in the sky after hit & flying from back to front (not as fun to see them fly)
 
         //10% chance to get new car be reverse-moving
-        if (Random.Range(0, 100) <= 10)
+        if (Random.Range(0, 100) <= 10 && !IsPlayerCar)
         {
             this.MakeReverse();
         }
