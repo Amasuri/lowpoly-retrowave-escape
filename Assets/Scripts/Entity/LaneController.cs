@@ -157,13 +157,6 @@ public class LaneController : MonoBehaviour
         //Instantiate
         var newTrafficCar = Instantiate(TrafficCar1) as Transform;
         newTrafficCar.position = new Vector3(pPos.x + spawnOffset, 0.02f, GetRandomLane());
-
-        //10% chance to get new car be reverse-moving
-        if (Random.Range(0, 100) <= 10)
-        {
-            var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
-            car.MakeReverse();
-        }
     }
 
     private void SpawnFourCarsPerRow(Vector3 pPos, float spawnOffset)
@@ -182,13 +175,6 @@ public class LaneController : MonoBehaviour
             //Instantiate
             var newTrafficCar = Instantiate(TrafficCar1) as Transform;
             newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), 0.02f, i * laneWidthInWU);
-
-            //10% chance to get new car be reverse-moving
-            if (Random.Range(0, 100) <= 10)
-            {
-                var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
-                car.MakeReverse();
-            }
         }
     }
 
@@ -208,13 +194,6 @@ public class LaneController : MonoBehaviour
             //Instantiate
             var newTrafficCar = Instantiate(TrafficCar1) as Transform;
             newTrafficCar.position = new Vector3(pPos.x + spawnOffset + Random.Range(-1f, 1f), 0.02f, i * laneWidthInWU);
-
-            //10% chance to get new car be reverse-moving
-            if (Random.Range(0, 100) <= 10)
-            {
-                var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
-                car.MakeReverse();
-            }
         }
     }
 
@@ -238,13 +217,6 @@ public class LaneController : MonoBehaviour
             //Instantiate
             var newTrafficCar = Instantiate(TrafficCar1) as Transform;
             newTrafficCar.position = new Vector3(pPos.x + spawnOffset + leadCarOffset + Random.Range(-1f, 1f), 0.02f, formationStartLane + i * laneWidthInWU);
-
-            //10% chance to get new car be reverse-moving
-            if (Random.Range(0, 100) <= 10)
-            {
-                var car = newTrafficCar.GetChild(0).GetComponent<CarController>();
-                car.MakeReverse();
-            }
         }
     }
 

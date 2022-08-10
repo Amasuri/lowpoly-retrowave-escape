@@ -36,6 +36,12 @@ public class CarController : MonoBehaviour
         //Make sure passing cars get KO'd
         if (!IsPlayerCar)
             Destroy(gameObject, 15);
+
+        //10% chance to get new car be reverse-moving
+        if (Random.Range(0, 100) <= 10)
+        {
+            this.MakeReverse();
+        }
     }
 
     private void FixedUpdate()
@@ -129,7 +135,7 @@ public class CarController : MonoBehaviour
         TurningGoalLane = transform.position.z + dir * LaneController.laneWidthInWU;
     }
 
-    public void MakeReverse()
+    private void MakeReverse()
     {
         if(LaneController.current.IsReverseCarSpawnBanned)
         {
