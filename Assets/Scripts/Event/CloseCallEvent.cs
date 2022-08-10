@@ -10,16 +10,6 @@ public class CloseCallEvent : MonoBehaviour
 
     public delegate void CloseCall();
 
-    // Start is called before the first frame update
-    private void Start()
-    {
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         //if it's a car,car is player car and player hasn't collided, then begin event
