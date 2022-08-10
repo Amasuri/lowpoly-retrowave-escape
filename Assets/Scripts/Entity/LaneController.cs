@@ -21,6 +21,9 @@ public class LaneController : MonoBehaviour
     private const float carSpawnOffsetXmin = 40f;
     private readonly float carSpawnOffsetXmax = terrainLength - 1f;
 
+    public bool IsReverseCarSpawnBanned => reverseCarSpawnBannedForS > 0f;
+    private float reverseCarSpawnBannedForS = 0f;
+
     //Timer
     private const float maxTrafficSpawnDelay = 3f;
     private float currentTrafficSpawnDelayDecrease => MathHelper.RemapAndLimitToRange(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, 2f);
@@ -55,6 +58,10 @@ public class LaneController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Making sure cars don't crash unto you after difficult spawns (i.e. 4-per-row spawns)
+        if (reverseCarSpawnBannedForS >= 0f)
+            reverseCarSpawnBannedForS -= Time.deltaTime;
+
         //Traffic spawning
         leftBeforeNextTrafficSpawn -= Time.deltaTime;
         if(leftBeforeNextTrafficSpawn <= 0f)
@@ -87,6 +94,7 @@ public class LaneController : MonoBehaviour
         leftBeforeNextTrafficSpawn = currentTrafficSpawnDelay;
         Debug.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
         TimesTerrainWasSpawned = 0;
+        reverseCarSpawnBannedForS = 0f;
 
         SpawnNextTerrainChunk(first: true);
     }
@@ -158,11 +166,14 @@ public class LaneController : MonoBehaviour
 
     private void SpawnFourCarsPerRow(Vector3 pPos, float spawnOffset)
     {
+        //4-per-row spawns are tricky, because other cars may crash unto you while you go through the gap
+        BanReverseCarSpawn();
+
         //Get free lane
-        var exitLane = (int)(GetRandomLane()/2);
+        var exitLane = (int)(GetRandomLane() / 2);
 
         //For all five lanes from leftmost to central to rightmost
-        for (int i = -2; i < 2+1; i++)
+        for (int i = -2; i < 2 + 1; i++)
         {
             if (i == exitLane) continue;
 
@@ -203,6 +214,11 @@ public class LaneController : MonoBehaviour
                 car.MakeReverse();
             }
         }
+    }
+
+    private void BanReverseCarSpawn()
+    {
+        reverseCarSpawnBannedForS = currentTrafficSpawnDelay * 1.5f;
     }
 
     private void SpawnNextTerrainChunk(bool first = false)

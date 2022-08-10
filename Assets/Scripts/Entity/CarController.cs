@@ -131,6 +131,12 @@ public class CarController : MonoBehaviour
 
     public void MakeReverse()
     {
+        if(LaneController.current.IsReverseCarSpawnBanned)
+        {
+            Debug.Log("Reverse car spawn banned, reversing aborted!");
+            return;
+        }
+
         IsReverse = true;
         transform.Rotate(new Vector3(0, 180, 0));
     }
