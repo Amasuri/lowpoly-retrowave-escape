@@ -7,10 +7,16 @@ public class RunGUITimeScoreText : MonoBehaviour
 {
     public TextMeshProUGUI terminal;
 
+    private const float deltaTextUpdateS = 0.25f;
+    private float nextTextUpdateInS = deltaTextUpdateS;
+    private string cachedText = "";
+
     // Start is called before the first frame update
     private void Start()
     {
         terminal = GetComponent<TextMeshProUGUI>();
+        terminal.text = "";
+        nextTextUpdateInS = 0f;
 
         WipeTerminalTextIfPlayerHasntBeenSpawned();
     }
@@ -18,20 +24,34 @@ public class RunGUITimeScoreText : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(!LaneController.current.HasPlayerBeenSpawned)
+        cachedText = "";
+
+        if (!LaneController.current.HasPlayerBeenSpawned)
         {
             WipeTerminalTextIfPlayerHasntBeenSpawned();
             return;
         }
 
-        int score = ScoreCounter.current.TotalScore; //score is STUB. score calculation to be done...
+        CalculateAndUpdateScoreString();
+
+        nextTextUpdateInS -= Time.deltaTime;
+        if (nextTextUpdateInS <= 0f)
+        {
+            terminal.text = cachedText;
+            nextTextUpdateInS = deltaTextUpdateS;
+        }
+    }
+
+    private void CalculateAndUpdateScoreString()
+    {
+        int score = ScoreCounter.current.TotalScore;
         int seconds = (int)RunTimer.TimeSinceLastRunStartSec;
 
         int dispSeconds = seconds % 60;
         int dispMinutes = seconds / 60;
 
-        terminal.text = dispMinutes.ToString("00") + ":" + dispSeconds.ToString("00");
-        terminal.text += "\n" + score.ToString("000000");
+        cachedText = dispMinutes.ToString("00") + ":" + dispSeconds.ToString("00");
+        cachedText += "\n" + score.ToString("000000");
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
@@ -40,6 +60,6 @@ public class RunGUITimeScoreText : MonoBehaviour
             return;
 
         if (!LaneController.current.HasPlayerBeenSpawned)
-            terminal.text = "";
+            cachedText = "";
     }
 }

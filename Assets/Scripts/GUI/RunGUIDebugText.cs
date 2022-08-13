@@ -13,22 +13,43 @@ public class RunGUIDebugText : MonoBehaviour
 
     private const bool DEBUG = true;
 
+    private const float deltaTextUpdateS = 0.25f;
+    private float nextTextUpdateInS = deltaTextUpdateS;
+    private string cachedText = "";
+
     // Start is called before the first frame update
     private void Start()
     {
+        nextTextUpdateInS = 0f;
+
         terminal = GetComponent<TextMeshProUGUI>();
+        terminal.text = "";
+
         fpsBuffer = new Queue<float>(fpsBufferSize);
         for (int i = 0; i < fpsBufferSize; i++)
             fpsBuffer.Enqueue(60f);
+
         WipeTerminalTextIfPlayerHasntBeenSpawned();
     }
 
     // Update is called once per frame
     private void Update()
     {
+        if (!DEBUG)
+            return;
+
+        cachedText = "";
+
         CalculateAndDisplayFPSAverage();
         DisplayFinalResAndCloseCallTimes();
         WipeTerminalTextIfPlayerHasntBeenSpawned();
+
+        nextTextUpdateInS -= Time.deltaTime;
+        if(nextTextUpdateInS <= 0f)
+        {
+            terminal.text = cachedText;
+            nextTextUpdateInS = deltaTextUpdateS;
+        }
     }
 
     private void CalculateAndDisplayFPSAverage()
@@ -37,15 +58,15 @@ public class RunGUIDebugText : MonoBehaviour
         fpsBuffer.Enqueue(1.0f / Time.deltaTime);
         var fpsAverage = fpsBuffer.Sum() / fpsBuffer.Count;
 
-        terminal.text = "FPS: " + (fpsAverage).ToString("000");
-        terminal.text += "       " + ScoreCounter.current.GetLastCloseCallDebug().ToString("0000");
+        cachedText = "FPS: " + (fpsAverage).ToString("000");
+        cachedText += "       " + ScoreCounter.current.GetLastCloseCallDebug().ToString("0000");
     }
 
     private void DisplayFinalResAndCloseCallTimes()
     {
-        terminal.text += "\n" + Screen.width + "x" + Screen.height;
-        terminal.text += "    CC: " + ScoreCounter.current.GetCloseCallTimesDebug();
-        terminal.text += "\n                  " + ScoreCounter.current.GetAllCloseCallDebug().ToString("000000");
+        cachedText += "\n" + Screen.width + "x" + Screen.height;
+        cachedText += "    CC: " + ScoreCounter.current.GetCloseCallTimesDebug();
+        cachedText += "\n                  " + ScoreCounter.current.GetAllCloseCallDebug().ToString("000000");
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
@@ -54,6 +75,6 @@ public class RunGUIDebugText : MonoBehaviour
             return;
 
         if (!LaneController.current.HasPlayerBeenSpawned)
-            terminal.text = "";
+            cachedText = "";
     }
 }
