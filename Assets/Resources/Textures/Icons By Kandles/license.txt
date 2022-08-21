@@ -1,0 +1,3 @@
+Icon Pack by "Art by Kandles"
+Standard Unity Asset Store EULA
+https://assetstore.unity.com/packages/2d/gui/icons/basic-icons-139575
