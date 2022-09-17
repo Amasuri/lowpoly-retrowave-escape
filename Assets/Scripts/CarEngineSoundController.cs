@@ -13,7 +13,7 @@ public class CarEngineSoundController : MonoBehaviour
 
     private const float normalVolume = 0.5f;
     private const float exhaustVolume = 0.3f;
-    private const float exhaustCDmax = 0.5f;
+    private const float exhaustCDmaxSec = 1f;
     private float exhaustCDcurrentSec = 0f;
 
     // Start is called before the first frame update
@@ -58,7 +58,7 @@ public class CarEngineSoundController : MonoBehaviour
         if (currentPitchDelta >= maxPitchDelta)
             resultPitch = endPitch;
 
-        soundPlayer.pitch = resultPitch;
+        soundPlayer.pitch = resultPitch - (exhaustCDcurrentSec / 5);
     }
 
     private void ControlTrafficEngine()
@@ -73,6 +73,6 @@ public class CarEngineSoundController : MonoBehaviour
             return;
 
         soundPlayer.volume = exhaustVolume;
-        exhaustCDcurrentSec = exhaustCDmax;
+        exhaustCDcurrentSec = exhaustCDmaxSec;
     }
 }
