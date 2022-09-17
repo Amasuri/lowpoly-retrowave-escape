@@ -19,13 +19,13 @@ public class CarExhaustSoundController : MonoBehaviour
 
     private void Update()
     {
-        if (RunTimer.TimeSinceLastRunStartSec >= 3f && timesShifted == 0)
+        if (RunTimer.TimeSinceLastRunStartSec >= 8f && timesShifted == 0)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= 8f && timesShifted == 1)
+        else if (RunTimer.TimeSinceLastRunStartSec >= 18f && timesShifted == 1)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= 20f && timesShifted == 2)
+        else if (RunTimer.TimeSinceLastRunStartSec >= 35f && timesShifted == 2)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= 45f && timesShifted == 3)
+        else if (RunTimer.TimeSinceLastRunStartSec >= 60f && timesShifted == 3)
             PlayExhaust();
     }
 

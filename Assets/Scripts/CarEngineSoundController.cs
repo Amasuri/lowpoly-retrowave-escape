@@ -75,4 +75,14 @@ public class CarEngineSoundController : MonoBehaviour
         soundPlayer.volume = exhaustVolume;
         exhaustCDcurrentSec = exhaustCDmaxSec;
     }
+
+    private void OnDestroy()
+    {
+        CarExhaustSoundController.OnEngineExhaust -= StartExhaustEventTimer;
+    }
+
+    private void OnDisable()
+    {
+        CarExhaustSoundController.OnEngineExhaust -= StartExhaustEventTimer;
+    }
 }
