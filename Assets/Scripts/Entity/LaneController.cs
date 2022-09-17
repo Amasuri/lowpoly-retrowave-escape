@@ -18,7 +18,7 @@ public class LaneController : MonoBehaviour
     public Transform TerrainPrefab;
 
     public const float laneWidthInWU = 2f;
-    private const float carSpawnOffsetXmin = 40f;
+    private const float carSpawnOffsetXmin = 50f; //used to be 40
     private readonly float carSpawnOffsetXmax = terrainLength - 1f;
 
     public bool IsReverseCarSpawnBanned => reverseCarSpawnBannedForS > 0f;
