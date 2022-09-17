@@ -11,6 +11,9 @@ public class RunGUITimeScoreText : MonoBehaviour
     private float nextTextUpdateInS = deltaTextUpdateS;
     private string cachedText = "";
 
+    private float CloseCallTimerLeftSec = 0f;
+    private float CloseCallTimerMax = 1.5f;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -19,6 +22,8 @@ public class RunGUITimeScoreText : MonoBehaviour
         nextTextUpdateInS = 0f;
 
         WipeTerminalTextIfPlayerHasntBeenSpawned();
+
+        CloseCallEvent.OnCloseCall += StartCloseCallText;
     }
 
     // Update is called once per frame
@@ -30,6 +35,11 @@ public class RunGUITimeScoreText : MonoBehaviour
         {
             WipeTerminalTextIfPlayerHasntBeenSpawned();
             return;
+        }
+
+        if(CloseCallTimerLeftSec > 0f)
+        {
+            CloseCallTimerLeftSec -= Time.deltaTime;
         }
 
         CalculateAndUpdateScoreString();
@@ -52,6 +62,9 @@ public class RunGUITimeScoreText : MonoBehaviour
 
         cachedText = dispMinutes.ToString("00") + ":" + dispSeconds.ToString("00");
         cachedText += "\n" + score.ToString("000000");
+
+        if(CloseCallTimerLeftSec > 0f)
+            cachedText += "\n+" + ScoreCounter.current.GetLastCloseCallDebug().ToString("0000") + "!";
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
@@ -61,5 +74,20 @@ public class RunGUITimeScoreText : MonoBehaviour
 
         if (!LaneController.current.HasPlayerBeenSpawned)
             cachedText = "";
+    }
+
+    private void StartCloseCallText()
+    {
+        CloseCallTimerLeftSec = CloseCallTimerMax;
+    }
+
+    private void OnDestroy()
+    {
+        CloseCallEvent.OnCloseCall -= StartCloseCallText;
+    }
+
+    private void OnDisable()
+    {
+        CloseCallEvent.OnCloseCall -= StartCloseCallText;
     }
 }
