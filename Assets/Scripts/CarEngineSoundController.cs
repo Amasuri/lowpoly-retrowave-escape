@@ -11,11 +11,19 @@ public class CarEngineSoundController : MonoBehaviour
     private const float startPitch = 0.75f; //0.6-0.7 works
     private const float endPitch = 2f;
 
+    private const float normalVolume = 0.5f;
+    private const float exhaustVolume = 0.3f;
+    private const float exhaustCDmax = 0.5f;
+    private float exhaustCDcurrentSec = 0f;
+
     // Start is called before the first frame update
     private void Start()
     {
         if(isPlayerCar)
+        {
             soundPlayer.pitch = startPitch;
+            CarExhaustSoundController.OnEngineExhaust += StartExhaustEventTimer;
+        }
     }
 
     // Update is called once per frame
@@ -35,6 +43,13 @@ public class CarEngineSoundController : MonoBehaviour
             return;
         }
 
+        if(exhaustCDcurrentSec > 0f)
+        {
+            exhaustCDcurrentSec -= Time.deltaTime;
+            if (exhaustCDcurrentSec <= 0f)
+                soundPlayer.volume = normalVolume;
+        }
+
         var maxPitchDelta = endPitch - startPitch;
 
         //Remaps elapsed time from time range 0-60s to engine pitch range 0-1.25f delta
@@ -50,5 +65,14 @@ public class CarEngineSoundController : MonoBehaviour
     {
         if(transform.parent.gameObject.GetComponent<CarController>().HasThisCarCollided)
             soundPlayer.enabled = false;
+    }
+
+    private void StartExhaustEventTimer()
+    {
+        if (!isPlayerCar)
+            return;
+
+        soundPlayer.volume = exhaustVolume;
+        exhaustCDcurrentSec = exhaustCDmax;
     }
 }
