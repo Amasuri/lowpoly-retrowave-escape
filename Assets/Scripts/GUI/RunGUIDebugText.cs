@@ -66,7 +66,7 @@ public class RunGUIDebugText : MonoBehaviour
     {
         cachedText += "\n" + Screen.width + "x" + Screen.height;
         cachedText += "    CC: " + ScoreCounter.current.GetCloseCallTimesDebug();
-        cachedText += "\n                  " + ScoreCounter.current.GetAllCloseCallDebug().ToString("000000");
+        cachedText += "\nCrash: " + PlayerCrashEventCounter.CrashTimes.ToString("00") + "   " + ScoreCounter.current.GetAllCloseCallDebug().ToString("000000");
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
