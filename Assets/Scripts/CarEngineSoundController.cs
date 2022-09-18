@@ -57,9 +57,15 @@ public class CarEngineSoundController : MonoBehaviour
         var nextShift = CarExhaustSoundController.NextShiftWillBeAt;
         var currentPitchDelta = MathHelper.Remap(RunTimer.TimeSinceLastRunStartSec, lastShift, nextShift, 0f, maxPitchDelta);
         var resultPitch = startPitch + currentPitchDelta;
+
+        //After each shift there's slight increase in starting point
+        resultPitch += 0.2f * CarExhaustSoundController.TimesShifted;
+
+        //Sanity check
         if (currentPitchDelta >= maxPitchDelta)
             resultPitch = endPitch;
 
+        //Applying + slight pitch drop right after the shift
         soundPlayer.pitch = resultPitch - (exhaustCDcurrentSec / 5);
     }
 

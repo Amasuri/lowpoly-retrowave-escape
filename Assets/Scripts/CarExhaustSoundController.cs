@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Static variables described here refer to the player. Since no one aside from the player
+/// is able to shift gears & it won't change; so exhaust control is purely player
+/// </summary>
 public class CarExhaustSoundController : MonoBehaviour
 {
+    public static int TimesShifted { get; private set; }
     public static float LastShiftWasAt { get; private set; }
     public static float NextShiftWillBeAt { get; private set; }
     private const float firstShiftAtSec = 8f;
@@ -26,33 +31,31 @@ public class CarExhaustSoundController : MonoBehaviour
 
     public delegate void EngineExhaust();
 
-    private int timesShifted = 0;
-
     private void Start()
     {
-        timesShifted = 0;
+        TimesShifted = 0;
         LastShiftWasAt = 0f;
         NextShiftWillBeAt = firstShiftAtSec;
     }
 
     private void Update()
     {
-        if (RunTimer.TimeSinceLastRunStartSec >= firstShiftAtSec && timesShifted == 0)
+        if (RunTimer.TimeSinceLastRunStartSec >= firstShiftAtSec && TimesShifted == 0)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= secondShiftAtSec && timesShifted == 1)
+        else if (RunTimer.TimeSinceLastRunStartSec >= secondShiftAtSec && TimesShifted == 1)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= thirdShiftAtSec && timesShifted == 2)
+        else if (RunTimer.TimeSinceLastRunStartSec >= thirdShiftAtSec && TimesShifted == 2)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= fourthShiftAtSec && timesShifted == 3)
+        else if (RunTimer.TimeSinceLastRunStartSec >= fourthShiftAtSec && TimesShifted == 3)
             PlayExhaust();
     }
 
     private void PlayExhaust()
     {
-        LastShiftWasAt = AmountShiftedToTime[timesShifted];
-        NextShiftWillBeAt = AmountShiftedToTime[timesShifted+1];
+        LastShiftWasAt = AmountShiftedToTime[TimesShifted];
+        NextShiftWillBeAt = AmountShiftedToTime[TimesShifted+1];
 
-        timesShifted++;
+        TimesShifted++;
         soundPlayer.Play();
 
         OnEngineExhaust();
