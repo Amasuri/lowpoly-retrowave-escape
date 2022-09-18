@@ -11,6 +11,8 @@ public class MusicController : MonoBehaviour
 
     private AudioClip previousTrack;
 
+    private static bool _DebugMute = false;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -26,6 +28,12 @@ public class MusicController : MonoBehaviour
 
         if (previousTrack != musicPlayer.clip)
             musicPlayer.Play();
+
+        //debug while listening to rave music
+        if (Input.GetKeyDown(KeyCode.M))
+            _DebugMute = !_DebugMute;
+        if (_DebugMute && musicPlayer.isPlaying)
+            musicPlayer.Stop();
 
         previousTrack = musicPlayer.clip;
     }
