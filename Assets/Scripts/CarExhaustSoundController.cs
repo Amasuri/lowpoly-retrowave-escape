@@ -4,6 +4,22 @@ using UnityEngine;
 
 public class CarExhaustSoundController : MonoBehaviour
 {
+    public static float LastShiftWasAt { get; private set; }
+    public static float NextShiftWillBeAt { get; private set; }
+    private const float firstShiftAtSec = 8f;
+    private const float secondShiftAtSec = 18f;
+    private const float thirdShiftAtSec = 35f;
+    private const float fourthShiftAtSec = 60f;
+
+    private Dictionary<int, float> AmountShiftedToTime = new Dictionary<int, float>
+    {
+        { 0, firstShiftAtSec },
+        { 1, secondShiftAtSec },
+        { 2, thirdShiftAtSec },
+        { 3, fourthShiftAtSec },
+        { 4, fourthShiftAtSec * 1.5f },
+    };
+
     public AudioSource soundPlayer;
 
     public static event EngineExhaust OnEngineExhaust;
@@ -15,22 +31,27 @@ public class CarExhaustSoundController : MonoBehaviour
     private void Start()
     {
         timesShifted = 0;
+        LastShiftWasAt = 0f;
+        NextShiftWillBeAt = firstShiftAtSec;
     }
 
     private void Update()
     {
-        if (RunTimer.TimeSinceLastRunStartSec >= 8f && timesShifted == 0)
+        if (RunTimer.TimeSinceLastRunStartSec >= firstShiftAtSec && timesShifted == 0)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= 18f && timesShifted == 1)
+        else if (RunTimer.TimeSinceLastRunStartSec >= secondShiftAtSec && timesShifted == 1)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= 35f && timesShifted == 2)
+        else if (RunTimer.TimeSinceLastRunStartSec >= thirdShiftAtSec && timesShifted == 2)
             PlayExhaust();
-        else if (RunTimer.TimeSinceLastRunStartSec >= 60f && timesShifted == 3)
+        else if (RunTimer.TimeSinceLastRunStartSec >= fourthShiftAtSec && timesShifted == 3)
             PlayExhaust();
     }
 
     private void PlayExhaust()
     {
+        LastShiftWasAt = AmountShiftedToTime[timesShifted];
+        NextShiftWillBeAt = AmountShiftedToTime[timesShifted+1];
+
         timesShifted++;
         soundPlayer.Play();
 
