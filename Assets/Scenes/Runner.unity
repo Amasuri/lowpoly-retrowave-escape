@@ -650,8 +650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicPlayer: {fileID: 853108699}
-  runnerMusic: {fileID: 8300000, guid: 6b6f5f1d93c9f664999226a457d12d44, type: 3}
-  loadingMusic: {fileID: 8300000, guid: aec487275c6596243a1962dfdd80d7d8, type: 3}
+  runnerMusic: {fileID: 8300000, guid: cfa2345a7e7dc754690b9b0112a54e5d, type: 3}
+  loadingMusic: {fileID: 8300000, guid: 91d1c12c96f92fd4e832c939e58b2439, type: 3}
 --- !u!4 &853108698
 Transform:
   m_ObjectHideFlags: 0
