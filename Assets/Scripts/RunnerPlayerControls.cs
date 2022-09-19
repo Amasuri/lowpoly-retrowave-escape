@@ -31,8 +31,8 @@ public class RunnerPlayerControls : MonoBehaviour
     /// </summary>
     private void DebugMobile_CarControl()
     {
-        if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
-            return;
+        //if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
+        //    return;
 
         var touch = Input.GetTouch(0);
         if (touch.phase != TouchPhase.Moved)
@@ -49,8 +49,8 @@ public class RunnerPlayerControls : MonoBehaviour
     /// </summary>
     private void PC_CarControl()
     {
-        if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
-            return;
+        //if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
+        //    return;
 
         if (Input.GetKeyDown(KeyCode.A))
             CarController.GetPlayerCar().StartChangingLane(toLeft: true);

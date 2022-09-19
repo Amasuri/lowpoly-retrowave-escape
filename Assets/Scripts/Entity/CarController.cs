@@ -9,6 +9,10 @@ public class CarController : MonoBehaviour
     public Collider collider;
     public Rigidbody rigidbody;
 
+    /// <summary>
+    /// Only makes sense for player (because only player changes positions)
+    /// </summary>
+    private int NextStrictLanePosition;
     private float TurningGoalLane = 0f;
     private readonly float[] PossibleLanes = { -4f, -2f, 0f, 2f, 4f };
 
@@ -26,12 +30,16 @@ public class CarController : MonoBehaviour
     private const float rotAmplitude = 3f;
     private const int reverseTurnSpeed = 5; //bigger => faster. 10 is slow, how is was in alpha, 5 is fast
 
+    private float defaultRotation;
+
     // Start is called before the first frame update
     private void Start()
     {
         allCars.Add(this);
         HasThisCarCollided = false;
         IsTurningNow = false;
+
+        NextStrictLanePosition = 0;
 
         //Make sure passing cars get KO'd
         if (!IsPlayerCar)
@@ -42,6 +50,8 @@ public class CarController : MonoBehaviour
         {
             this.MakeReverse();
         }
+
+        defaultRotation = transform.rotation.eulerAngles.y;
     }
 
     private void FixedUpdate()
@@ -52,6 +62,8 @@ public class CarController : MonoBehaviour
         MoveForward();
         if (IsTurningNow)
             DoSmoothTurn();
+        else if (transform.rotation.eulerAngles.y != defaultRotation)
+            CorrectCarRotation();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -132,7 +144,8 @@ public class CarController : MonoBehaviour
         var dir = toLeft ? 1 : -1;
 
         IsTurningNow = true;
-        TurningGoalLane = transform.position.z + dir * LaneController.laneWidthInWU;
+        NextStrictLanePosition += dir * (int)LaneController.laneWidthInWU;
+        TurningGoalLane = NextStrictLanePosition; //transform.position.z + dir * LaneController.laneWidthInWU;
     }
 
     private void MakeReverse()
@@ -149,13 +162,30 @@ public class CarController : MonoBehaviour
 
     private void DoSmoothTurn()
     {
+        //----POSITION---
+
         //Smooth lane change
         var signedDelta = transform.position.z - TurningGoalLane;
         transform.position += new Vector3(0, 0, -signedDelta / reverseTurnSpeed);
 
-        //Smooth rotation dip
-        var rot = Mathf.Cos(signedDelta + (1 * Mathf.Sign(signedDelta)));
-        transform.Rotate(new Vector3(0, rot * rotAmplitude * Mathf.Sign(-signedDelta), 0));
+        //----ROTATION---
+
+        //Sanity check: Should always pursue rot 0 if less than 50% of laneWU.
+        if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU / 2)
+        {
+            CorrectCarRotation();
+        }
+
+        //The below case works well when delta <= laneWU, but falls apart when delta is LaneWU*1f..2f, resulting in "drifting" car.
+        //Hence the need for above sanity check
+        else
+        {
+            //Smooth rotation dip based on cosine
+            var rot = Mathf.Cos(signedDelta + (1 * Mathf.Sign(signedDelta)));
+            transform.Rotate(new Vector3(0, rot * rotAmplitude * Mathf.Sign(-signedDelta), 0));
+        }
+
+        //----SNAPPING
 
         //If very close to the right lane, do the snap
         if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU / 25)
@@ -165,6 +195,28 @@ public class CarController : MonoBehaviour
 
             //And fix rotation
             ;
+        }
+    }
+
+    private void CorrectCarRotation()
+    {
+        var def = defaultRotation;
+        var curr = transform.rotation.eulerAngles.y;
+        var signedDelta = def - curr;
+
+        if(Mathf.Abs(signedDelta) <= 0.01f)
+        {
+            return;
+        }
+        else if(Mathf.Abs(signedDelta) <= 1f)
+        {
+            var correction = signedDelta;
+            transform.Rotate(new Vector3(0, correction, 0));
+        }
+        else
+        {
+            var correction = (def - curr) / 10;
+            transform.Rotate(new Vector3(0, correction, 0));
         }
     }
 
