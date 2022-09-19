@@ -162,16 +162,22 @@ public class CarController : MonoBehaviour
 
     private void DoSmoothTurn()
     {
-        //----POSITION---
-
-        //Smooth lane change
         var signedDelta = transform.position.z - TurningGoalLane;
+
+        DoSmoothTurnPosition(signedDelta);
+        DoSmoothTurnRotation(signedDelta);
+        DoSmoothTurnSnapping(signedDelta);
+    }
+
+    private void DoSmoothTurnPosition(float signedDelta)
+    {
         transform.position += new Vector3(0, 0, -signedDelta / reverseTurnSpeed);
+    }
 
-        //----ROTATION---
-
+    private void DoSmoothTurnRotation(float signedDelta)
+    {
         //Sanity check: Should always pursue rot 0 if less than 50% of laneWU.
-        if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU / 2)
+        if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU * 0.50f)
         {
             CorrectCarRotation();
         }
@@ -184,9 +190,10 @@ public class CarController : MonoBehaviour
             var rot = Mathf.Cos(signedDelta + (1 * Mathf.Sign(signedDelta)));
             transform.Rotate(new Vector3(0, rot * rotAmplitude * Mathf.Sign(-signedDelta), 0));
         }
+    }
 
-        //----SNAPPING
-
+    private void DoSmoothTurnSnapping(float signedDelta)
+    {
         //If very close to the right lane, do the snap
         if (Mathf.Abs(signedDelta) <= LaneController.laneWidthInWU / 25)
         {
@@ -194,7 +201,7 @@ public class CarController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, TurningGoalLane);
 
             //And fix rotation
-            ;
+            ; //(isn't needed by current design, it's done as one of "correct car" sanity check things)
         }
     }
 
