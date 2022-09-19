@@ -9,7 +9,7 @@ public class Bird : MonoBehaviour
         var movVec = new Vector3(
             Time.fixedDeltaTime * CarController.speedFactorCurrent / 2,
             0,
-            -Time.fixedDeltaTime * CarController.speedFactorCurrent / 100);
+            -Time.fixedDeltaTime * CarController.speedFactorCurrent / 15); //10..20
         transform.position += movVec;
     }
 }
