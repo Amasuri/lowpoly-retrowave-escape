@@ -12,10 +12,15 @@ public class RunnerPlayerControls : MonoBehaviour
     private Vector2 startPos;
     private Vector2 endPos;
 
+    private bool CountNextTouch;
+    private bool BlockedUntilNext;
+
     // Start is called before the first frame update
     private void Start()
     {
         IsMobile = SystemInfo.operatingSystem.Contains("Android");
+
+        BlockedUntilNext = false;
     }
 
     // Update is called once per frame
@@ -38,7 +43,10 @@ public class RunnerPlayerControls : MonoBehaviour
         //if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
         //    return;
 
-        //var touch = Touchscreen.current.primaryTouch;
+        //------------
+        //The default input system
+        //1. Without a built in time limiter, falls apart. In general, prone to breaking even with it
+        //2. That's it
 
         //var touch = Input.GetTouch(0);
         //if (touch.phase != TouchPhase.Moved)
@@ -50,25 +58,81 @@ public class RunnerPlayerControls : MonoBehaviour
         //    CarController.GetPlayerCar().StartChangingLane(toLeft: false);
 
         //---------------
-        //Not a very bad input system, but:
+        //Not a very bad input system, it's very stable, but:
         //1. has the obvious input delay because it's based on TouchPhase.Ended
         //2. needs a time out: if between phase.Began and phase.Ended is more than 1-2s, abort the touch
 
+        //var touch = Input.GetTouch(0);
+
+        //if(Input.touchCount > 0 && touch.phase == TouchPhase.Began)
+        //{
+        //    startPos = touch.position;
+        //}
+
+        //if(Input.touchCount > 0 && touch.phase == TouchPhase.Ended)
+        //{
+        //    endPos = touch.position;
+
+        //    if (startPos.x > endPos.x)
+        //        CarController.GetPlayerCar().StartChangingLane(toLeft: true);
+        //    if (startPos.x < endPos.x)
+        //        CarController.GetPlayerCar().StartChangingLane(toLeft: false);
+        //}
+
+        //---------------
+        //Input?
+        //1. It's fast
+        //2. But doesn't work with gentle touches... If you swipe furiously, that'll work very fast!
+        //   Probably because doesn't immediately go Began -> Moved, but Began -> Stationary -> Moved
+        //3. Could be good to instead block touch until it reached touch end
+
+        //var touch = Input.GetTouch(0);
+
+        //if (touch.phase == TouchPhase.Began)
+        //{
+        //    CountNextTouch = true;
+        //    return;
+        //}
+
+        //if(touch.phase == TouchPhase.Moved && CountNextTouch)
+        //{
+        //    CountNextTouch = false;
+
+        //    if (touch.deltaPosition.x < 0f)
+        //        CarController.GetPlayerCar().StartChangingLane(toLeft: true);
+        //    else if (touch.deltaPosition.x > 0f)
+        //        CarController.GetPlayerCar().StartChangingLane(toLeft: false);
+        //}
+        //else
+        //{
+        //    CountNextTouch = false;
+        //}
+
+        //-------------------
+        //The perfect input system
+        //1. It's fast
+        //2. It's reliable
+        //3. What else do you need?
+
         var touch = Input.GetTouch(0);
 
-        if(Input.touchCount > 0 && touch.phase == TouchPhase.Began)
+        if (touch.phase == TouchPhase.Ended)
         {
-            startPos = touch.position;
+            BlockedUntilNext = false;
         }
 
-        if(Input.touchCount > 0 && touch.phase == TouchPhase.Ended)
+        if (touch.phase == TouchPhase.Moved && !BlockedUntilNext)
         {
-            endPos = touch.position;
-
-            if (startPos.x > endPos.x)
+            if (touch.deltaPosition.x < 0f)
+            {
                 CarController.GetPlayerCar().StartChangingLane(toLeft: true);
-            if (startPos.x < endPos.x)
+                BlockedUntilNext = true;
+            }
+            else if (touch.deltaPosition.x > 0f)
+            {
                 CarController.GetPlayerCar().StartChangingLane(toLeft: false);
+                BlockedUntilNext = true;
+            }
         }
     }
 
