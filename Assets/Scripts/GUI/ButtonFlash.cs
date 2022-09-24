@@ -21,12 +21,12 @@ public class ButtonFlash : MonoBehaviour, IPointerEnterHandler
         SystemSettings.FLASHES_ON = !SystemSettings.FLASHES_ON;
 
         var setting = SystemSettings.FLASHES_ON ? "yes" : "no";
-        terminal.text = "Toggle flashing lights: " + setting;
+        terminal.text = "Flashing lights: " + setting;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         var setting = SystemSettings.FLASHES_ON ? "yes" : "no";
-        terminal.text = "Toggle flashing lights: " + setting;
+        terminal.text = "Flashing lights: " + setting;
     }
 }
