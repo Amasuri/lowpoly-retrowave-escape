@@ -26,6 +26,12 @@ public class CarExhaustEffect : MonoBehaviour
 
     private void Update()
     {
+        if (!SystemSettings.FLASHES_ON)
+        {
+            light.enabled = false;
+            return;
+        }
+
         if (ExhaustCDnow > 0f)
         {
             ExhaustCDnow -= Time.deltaTime;
@@ -48,6 +54,12 @@ public class CarExhaustEffect : MonoBehaviour
 
     private void StartExhaustEventEffect()
     {
+        if(!SystemSettings.FLASHES_ON)
+        {
+            light.enabled = false;
+            return;
+        }
+
         light.enabled = true;
         ExhaustCDnow = ExhaustCDmax;
     }
