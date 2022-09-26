@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ButtonFlash : MonoBehaviour, IPointerEnterHandler
+public class ButtonTypeFlash : MonoBehaviour, IPointerEnterHandler
 {
     public Button button;
     public TextMeshProUGUI terminal;
