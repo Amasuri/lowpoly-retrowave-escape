@@ -298,6 +298,7 @@ MonoBehaviour:
   thisImage: {fileID: 48485430}
   thisButton: {fileID: 48485429}
   IsTitleButton: 0
+  ToHalfFade: 0
 --- !u!1 &217560059
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1045,7 @@ MonoBehaviour:
   thisImage: {fileID: 937753388}
   thisButton: {fileID: 937753387}
   IsTitleButton: 1
+  ToHalfFade: 0
 --- !u!1 &956330512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2291,6 +2293,7 @@ MonoBehaviour:
   thisImage: {fileID: 1816312894}
   thisButton: {fileID: 1816312896}
   IsTitleButton: 1
+  ToHalfFade: 0
 --- !u!114 &1816312898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2372,6 +2375,7 @@ MonoBehaviour:
   thisImage: {fileID: 1825062257}
   thisButton: {fileID: 1825062259}
   IsTitleButton: 1
+  ToHalfFade: 0
 --- !u!114 &1825062257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2847,6 +2851,7 @@ GameObject:
   - component: {fileID: 2002404041}
   - component: {fileID: 2002404040}
   - component: {fileID: 2002404045}
+  - component: {fileID: 2002404046}
   m_Layer: 0
   m_Name: Credits Button
   m_TagString: Untagged
@@ -2900,6 +2905,7 @@ MonoBehaviour:
   thisImage: {fileID: 2002404042}
   thisButton: {fileID: 2002404044}
   IsTitleButton: 1
+  ToHalfFade: 0
 --- !u!114 &2002404042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2920,7 +2926,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 772240a0dc4023a45af7124906721160, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f899d516ecc9cf4fb338a3bfdb9b8b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3039,3 +3045,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &2002404046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002404038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33775ad60d2b6114f9a648c49ad04763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 2002404044}
+  ChangeSceneToValue: 1
