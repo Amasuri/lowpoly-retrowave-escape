@@ -1891,13 +1891,14 @@ GameObject:
   - component: {fileID: 1697361380}
   - component: {fileID: 1697361383}
   - component: {fileID: 1697361382}
+  - component: {fileID: 1697361381}
   m_Layer: 5
   m_Name: Tooltip Text (TMP)
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1697361380
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1917,6 +1918,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &1697361381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697361379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c9675527dfb5c419b2d9ba8c01c944, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terminal: {fileID: 1697361382}
+  isTooltipText: 1
 --- !u!114 &1697361382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2487,22 +2502,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1697361379}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 1697361381}
+          m_TargetAssemblyTypeName: TextFadeOut, Assembly-CSharp
+          m_MethodName: ResetToOblique
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 0
+            m_BoolArgument: 1
           m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &1825062261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2517,6 +2532,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 1825062259}
   terminal: {fileID: 1697361382}
+  textFadeComponent: {fileID: 1697361381}
 --- !u!1 &1898262242
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,22 +3045,22 @@ MonoBehaviour:
             m_StringArgument: See who made this <3
             m_BoolArgument: 1
           m_CallState: 2
-  - eventID: 1
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1697361379}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 1697361381}
+          m_TargetAssemblyTypeName: TextFadeOut, Assembly-CSharp
+          m_MethodName: ResetToOblique
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 0
+            m_BoolArgument: 1
           m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!114 &2002404046
 MonoBehaviour:
   m_ObjectHideFlags: 0
