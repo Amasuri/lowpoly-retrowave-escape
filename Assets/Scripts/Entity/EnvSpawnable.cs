@@ -10,7 +10,8 @@ public class EnvSpawnable : MonoBehaviour
         Hut,
         Skyscraper,
         Bird,
-        Plane
+        Plane,
+        Freighter
     }
 
     private void Start()
@@ -46,6 +47,9 @@ public class EnvSpawnable : MonoBehaviour
 
             case EnvType.Plane:
                 return 10;
+
+            case EnvType.Freighter:
+                return 20;
 
             default:
                 return 0;
