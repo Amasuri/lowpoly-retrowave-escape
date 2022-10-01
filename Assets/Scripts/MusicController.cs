@@ -11,8 +11,6 @@ public class MusicController : MonoBehaviour
 
     private AudioClip previousTrack;
 
-    private static bool _DebugMute = false;
-
     // Start is called before the first frame update
     private void Start()
     {
@@ -21,6 +19,17 @@ public class MusicController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Audio setting switcher
+        if(!SystemSettings.MUSIC_ON && musicPlayer.isPlaying)
+        {
+            musicPlayer.Stop();
+        }
+        else if(SystemSettings.MUSIC_ON && !musicPlayer.isPlaying)
+        {
+            musicPlayer.Play();
+        }
+
+        //Switch & play tracks based on current context
         if (LaneController.current.HasPlayerBeenSpawned)
             musicPlayer.clip = runnerMusic;
         else
@@ -28,12 +37,6 @@ public class MusicController : MonoBehaviour
 
         if (previousTrack != musicPlayer.clip)
             musicPlayer.Play();
-
-        //debug while listening to rave music
-        if (Input.GetKeyDown(KeyCode.M))
-            _DebugMute = !_DebugMute;
-        if (_DebugMute && musicPlayer.isPlaying)
-            musicPlayer.Stop();
 
         previousTrack = musicPlayer.clip;
     }
