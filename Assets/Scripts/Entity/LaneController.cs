@@ -24,6 +24,9 @@ public class LaneController : MonoBehaviour
     public bool IsReverseCarSpawnBanned => reverseCarSpawnBannedForS > 0f;
     private float reverseCarSpawnBannedForS = 0f;
 
+    public bool IsFourFormationBanned => FourFormationBannedForS > 0f;
+    private float FourFormationBannedForS = 0f;
+
     //Timer
     private const float maxTrafficSpawnDelay = 3f;
     private float currentTrafficSpawnDelayDecrease => MathHelper.RemapAndLimitToRange(RunTimer.TimeSinceLastRunStartSec, 0f, 60f, 0f, 2f);
@@ -62,6 +65,9 @@ public class LaneController : MonoBehaviour
         if (reverseCarSpawnBannedForS >= 0f)
             reverseCarSpawnBannedForS -= Time.deltaTime;
 
+        if (FourFormationBannedForS >= 0f)
+            FourFormationBannedForS -= Time.deltaTime;
+
         //Traffic spawning
         leftBeforeNextTrafficSpawn -= Time.deltaTime;
         if(leftBeforeNextTrafficSpawn <= 0f)
@@ -95,6 +101,7 @@ public class LaneController : MonoBehaviour
         Debug.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
         TimesTerrainWasSpawned = 0;
         reverseCarSpawnBannedForS = 0f;
+        FourFormationBannedForS = 0f;
 
         SpawnNextTerrainChunk(first: true);
     }
@@ -168,6 +175,12 @@ public class LaneController : MonoBehaviour
 
     private void SpawnFourCarsPerRow(Vector3 pPos, float spawnOffset)
     {
+        if(IsFourFormationBanned)
+        {
+            Debug.Log("Four formation car spawn banned, spawn aborted!");
+            return;
+        }
+
         //4-per-row spawns are tricky, because other cars may crash unto you while you go through the gap
         BanReverseCarSpawn();
 
@@ -209,6 +222,9 @@ public class LaneController : MonoBehaviour
         //Not specifically a problematic formation, but there could be problems if player wanted to go between the cars
         BanReverseCarSpawn();
 
+        //Turned out to be quite tricky with 4-formation patterns
+        BanFourFormationSpawn();
+
         //If we count the whole formation; there's only three lanes available for car spawn;
         //that means only the left and center ones are eligible
         var formationStartLane = Random.Range(-2, 0 + 1) * laneWidthInWU;
@@ -230,6 +246,11 @@ public class LaneController : MonoBehaviour
     private void BanReverseCarSpawn()
     {
         reverseCarSpawnBannedForS = currentTrafficSpawnDelay * 1.5f;
+    }
+
+    private void BanFourFormationSpawn()
+    {
+        FourFormationBannedForS = currentTrafficSpawnDelay * 1.5f;
     }
 
     private void SpawnNextTerrainChunk(bool first = false)
