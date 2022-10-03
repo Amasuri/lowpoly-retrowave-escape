@@ -29,7 +29,7 @@ public class RunGUITimeScoreText : MonoBehaviour
         WipeTerminalTextIfPlayerHasntBeenSpawned();
 
         CloseCallEvent.OnCloseCall += StartCloseCallText;
-        CloseCallFailureEvent.OnCloseCallFail += StartCloseCallText;
+        CloseCallFailureEvent.OnCloseCallFail += StartCloseCallFailText;
     }
 
     // Update is called once per frame
@@ -89,15 +89,27 @@ public class RunGUITimeScoreText : MonoBehaviour
         CloseCallTimerLeftSec = CloseCallTimerMax;
     }
 
+    private void StartCloseCallFailText()
+    {
+        //The context is as such: if failed CC happened ~immediately after CC, don't display it, it's probably a side bump thing
+        if (CloseCallTimerMax - CloseCallTimerLeftSec <= 0.05f) //~50ms; backbumps happen correctly on 0-60s speed, head2head bumps displayed on 10s but not on 60s speed
+        {
+            CloseCallTimerLeftSec = 0f;
+            return;
+        }
+
+        CloseCallTimerLeftSec = CloseCallTimerMax;
+    }
+
     private void OnDestroy()
     {
         CloseCallEvent.OnCloseCall -= StartCloseCallText;
-        CloseCallFailureEvent.OnCloseCallFail -= StartCloseCallText;
+        CloseCallFailureEvent.OnCloseCallFail -= StartCloseCallFailText;
     }
 
     private void OnDisable()
     {
         CloseCallEvent.OnCloseCall -= StartCloseCallText;
-        CloseCallFailureEvent.OnCloseCallFail -= StartCloseCallText;
+        CloseCallFailureEvent.OnCloseCallFail -= StartCloseCallFailText;
     }
 }
