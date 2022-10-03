@@ -6,6 +6,7 @@ using UnityEngine;
 public class RunGUITimeScoreText : MonoBehaviour
 {
     public TextMeshProUGUI terminal;
+    static public RunGUITimeScoreText current;
 
     private const float deltaTextUpdateS = 0.25f;
     private float nextTextUpdateInS = deltaTextUpdateS;
@@ -14,6 +15,8 @@ public class RunGUITimeScoreText : MonoBehaviour
     private float CloseCallTimerLeftSec = 0f;
     private float CloseCallTimerMax = 1.5f;
 
+    public bool HadCloseCallRecently => CloseCallTimerLeftSec > 0f;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -21,9 +24,12 @@ public class RunGUITimeScoreText : MonoBehaviour
         terminal.text = "";
         nextTextUpdateInS = 0f;
 
+        current = this;
+
         WipeTerminalTextIfPlayerHasntBeenSpawned();
 
         CloseCallEvent.OnCloseCall += StartCloseCallText;
+        CloseCallFailureEvent.OnCloseCallFail += StartCloseCallText;
     }
 
     // Update is called once per frame
@@ -63,8 +69,10 @@ public class RunGUITimeScoreText : MonoBehaviour
         cachedText = dispMinutes.ToString("00") + ":" + dispSeconds.ToString("00");
         cachedText += "\n" + score.ToString("000000");
 
+        var lastCCval = ScoreCounter.current.GetLastCloseCallDebug();
+        var sign = lastCCval > 0f ? "+" : "-";
         if(CloseCallTimerLeftSec > 0f)
-            cachedText += "\n+" + ScoreCounter.current.GetLastCloseCallDebug().ToString("0000") + "!";
+            cachedText += "\n" + sign + lastCCval.ToString("0000") + "!";
     }
 
     private void WipeTerminalTextIfPlayerHasntBeenSpawned()
@@ -84,10 +92,12 @@ public class RunGUITimeScoreText : MonoBehaviour
     private void OnDestroy()
     {
         CloseCallEvent.OnCloseCall -= StartCloseCallText;
+        CloseCallFailureEvent.OnCloseCallFail -= StartCloseCallText;
     }
 
     private void OnDisable()
     {
         CloseCallEvent.OnCloseCall -= StartCloseCallText;
+        CloseCallFailureEvent.OnCloseCallFail -= StartCloseCallText;
     }
 }

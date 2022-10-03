@@ -56,6 +56,7 @@ public class ScoreCounter : MonoBehaviour
     public void Reset()
     {
         CloseCallEvent.OnCloseCall += RegisterNewCloseCall;
+        CloseCallFailureEvent.OnCloseCallFail += RegisterCloseCallFail;
 
         CloseCallTimesDebug = 0;
         LastCloseCallDebug = 0f;
@@ -69,13 +70,22 @@ public class ScoreCounter : MonoBehaviour
         CloseCallList.Add(CloseCallScoreCurrentOnetimeBonus);
     }
 
+    private void RegisterCloseCallFail()
+    {
+        CloseCallTimesDebug--;
+        LastCloseCallDebug = -LastCloseCallDebug;
+        CloseCallList.Add(LastCloseCallDebug);
+    }
+
     private void OnDestroy()
     {
         CloseCallEvent.OnCloseCall -= RegisterNewCloseCall;
+        CloseCallFailureEvent.OnCloseCallFail -= RegisterCloseCallFail;
     }
 
     private void OnDisable()
     {
         CloseCallEvent.OnCloseCall -= RegisterNewCloseCall;
+        CloseCallFailureEvent.OnCloseCallFail -= RegisterCloseCallFail;
     }
 }
