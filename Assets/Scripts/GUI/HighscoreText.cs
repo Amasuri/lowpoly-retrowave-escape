@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TooltipHighscoreText : MonoBehaviour
+public class HighscoreText : MonoBehaviour
 {
     /// <summary>
     /// One of the ways to know if settings menu is activated or not
     /// </summary>
     public GameObject refToFlashButton;
     public TextMeshProUGUI terminal;
-    public GameObject refToTooltipObject;
+    public GameObject refToHighscoreObject;
+    public Image refToPlayButton;
 
     private void Start()
     {
@@ -20,11 +22,19 @@ public class TooltipHighscoreText : MonoBehaviour
     {
         var SettingsClosed = !refToFlashButton.activeSelf;
         var HasData = SystemSave.HighestScore > 0f || SystemSave.CumulativeScore > 0f;
+        var HasPlaybuttonFinishedFadingIn = refToPlayButton.color.a >= 0.75f;
 
-        if (SettingsClosed && HasData && (!refToTooltipObject.activeSelf || terminal.text == ""))
+        //Scenarios in which tooltip seems inappropriate
+        if(!SettingsClosed || !HasData || LaneController.current.HasPlayerBeenSpawned || !HasPlaybuttonFinishedFadingIn)
         {
-            refToTooltipObject.SetActive(true);
-            refToTooltipObject.GetComponent<TextFadeOut>().ResetToOblique();
+            refToHighscoreObject.SetActive(false);
+            return;
+        }
+
+        //Code below assumes that settings are closed, there is data and player isn't running, etc etc (from above)
+        if (!refToHighscoreObject.activeSelf || terminal.text == "" || terminal.text == "i'm highscore!")
+        {
+            refToHighscoreObject.SetActive(true);
             SetDisplayData();
         }
     }
