@@ -32,6 +32,11 @@ public class SystemSave : MonoBehaviour
 
                 //There's a possibility, if some system decides to have different newline strings like /n /r and such, and save files were moved (crazy!) between systems
                 //That, or file got corrupted (somehow).
+                //-----
+                //Another possibility: first time user opened game, but didn't press play, and closed (leaving blank file)
+                //For that, simply resetting (as below) is enough, because on first successful run score will be recorded, since file rewrites itself
+                //(That has been tested on a real phone)
+                //-----
                 //Supported: Windows, Android. If I get to HTML5 dev, there probably will be a I/O problem here
                 catch (Exception)
                 {
