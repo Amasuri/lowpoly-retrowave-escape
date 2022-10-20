@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "NXEDU19509001762",
     "m_SelectedPackage": {
-        "deviceId": "NXEDU19509001762",
-        "name": "com.amasuri.LowpolyRetrowaveEscape",
-        "processId": 20668,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -30,7 +30,13 @@
             "deviceId": "NXEDU19509001762",
             "name": "com.amasuri.LowpolyRetrowaveEscape",
             "processId": 20668,
-            "exited": false
+            "exited": true
+        },
+        {
+            "deviceId": "NXEDU19509001762",
+            "name": "com.amasuri.LowpolySunsetEscape",
+            "processId": 14877,
+            "exited": true
         }
     ],
     "m_Tags": {
