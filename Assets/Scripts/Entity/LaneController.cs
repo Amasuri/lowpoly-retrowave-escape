@@ -73,7 +73,7 @@ public class LaneController : MonoBehaviour
         if(leftBeforeNextTrafficSpawn <= 0f)
         {
             leftBeforeNextTrafficSpawn = currentTrafficSpawnDelay;
-            Debug.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
+            Logger.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
             SpawnNewTraffic();
         }
 
@@ -98,7 +98,7 @@ public class LaneController : MonoBehaviour
     {
         HasPlayerCollided = false;
         leftBeforeNextTrafficSpawn = currentTrafficSpawnDelay;
-        Debug.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
+        Logger.Log("Car spawned after " + currentTrafficSpawnDelay + "s");
         TimesTerrainWasSpawned = 0;
         reverseCarSpawnBannedForS = 0f;
         FourFormationBannedForS = 0f;
@@ -149,7 +149,7 @@ public class LaneController : MonoBehaviour
         if (HasPlayerCollided)
         {
             spawnOffset = -spawnOffset;
-            Debug.Log("Spawning behind!");
+            Logger.Log("Spawning behind!");
         }
 
         //Decide on spawning pattern
@@ -177,7 +177,7 @@ public class LaneController : MonoBehaviour
     {
         if(IsFourFormationBanned)
         {
-            Debug.Log("Four formation car spawn banned, spawn aborted!");
+            Logger.Log("Four formation car spawn banned, spawn aborted!");
             return;
         }
 
@@ -291,7 +291,7 @@ public class LaneController : MonoBehaviour
             debugActualSpawnTime = dynamicTerrainChunkDestroyTimeS;
         }
 
-        Debug.Log("Terrain spawn info: "+maxTerrainChunkDestroyTimeS +"* ("+CarController.startSpeed +"/"+ CarController.speedFactorCurrent+")"+
+        Logger.Log("Terrain spawn info: "+maxTerrainChunkDestroyTimeS +"* ("+CarController.startSpeed +"/"+ CarController.speedFactorCurrent+")"+
             "="+ dynamicTerrainChunkDestroyTimeS + "(actual:" + debugActualSpawnTime + ") ("+RunTimer.TimeSinceLastRunStartSec+")s");
 
         TimesTerrainWasSpawned++;

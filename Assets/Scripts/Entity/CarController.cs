@@ -152,7 +152,7 @@ public class CarController : MonoBehaviour
     {
         if(LaneController.current.IsReverseCarSpawnBanned)
         {
-            Debug.Log("Reverse car spawn banned, reversing aborted!");
+            Logger.Log("Reverse car spawn banned, reversing aborted!");
             return;
         }
 
@@ -247,6 +247,6 @@ public class CarController : MonoBehaviour
     private void OnDestroy()
     {
         allCars.Remove(this);
-        Debug.Log("Car despawned! Cars left: " + allCars.Count);
+        Logger.Log("Car despawned! Cars left: " + allCars.Count);
     }
 }

@@ -24,11 +24,11 @@ public class EnvSpawnable : MonoBehaviour
         if (chance >= spawnChance)
         {
             gameObject.SetActive(false);
-            Debug.Log(envType + " not spawned!");
+            Logger.Log(envType + " not spawned!");
         }
         else
         {
-            Debug.Log(envType + " spawned!");
+            Logger.Log(envType + " spawned!");
         }
     }
 
