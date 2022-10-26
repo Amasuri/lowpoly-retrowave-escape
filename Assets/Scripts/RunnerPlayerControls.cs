@@ -15,7 +15,6 @@ public class RunnerPlayerControls : MonoBehaviour
     private bool CountNextTouch;
     private bool BlockedUntilNext;
 
-    // Start is called before the first frame update
     private void Start()
     {
         IsMobile = SystemInfo.operatingSystem.Contains("Android");
@@ -23,14 +22,13 @@ public class RunnerPlayerControls : MonoBehaviour
         BlockedUntilNext = false;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (LaneController.HasPlayerCollided)
             return;
 
         if (IsMobile)
-            DebugMobile_CarControl();
+            Mobile_CarControl();
         else
             PC_CarControl();
     }
@@ -38,7 +36,7 @@ public class RunnerPlayerControls : MonoBehaviour
     /// <summary>
     /// Warning! The control scheme is unpolished. F2 the method when you finish making it as user friendly as possible
     /// </summary>
-    private void DebugMobile_CarControl()
+    private void Mobile_CarControl()
     {
         //if (CarController.GetPlayerCar() == null || CarController.GetPlayerCar().IsTurningNow)
         //    return;
