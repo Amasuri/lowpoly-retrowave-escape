@@ -112,6 +112,12 @@ public class RunnerPlayerControls : MonoBehaviour
         //2. It's reliable
         //3. What else do you need?
 
+        //Savings against IndexOutOfBound spam on Android
+        if ( !(Input.touchCount > 0) )
+            return;
+
+        //The _return_ above ^^^ shouldn't do anything with the logic below, because in case of
+        //the related exception Unity just refused to update script below Input.GetTouch(0);
         var touch = Input.GetTouch(0);
 
         if (touch.phase == TouchPhase.Ended)
