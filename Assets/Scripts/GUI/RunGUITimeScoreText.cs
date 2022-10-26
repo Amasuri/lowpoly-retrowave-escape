@@ -35,8 +35,6 @@ public class RunGUITimeScoreText : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        cachedText = "";
-
         if (!LaneController.current.HasPlayerBeenSpawned)
         {
             WipeTerminalTextIfPlayerHasntBeenSpawned();
@@ -48,11 +46,11 @@ public class RunGUITimeScoreText : MonoBehaviour
             CloseCallTimerLeftSec -= Time.deltaTime;
         }
 
-        CalculateAndUpdateScoreString();
-
         nextTextUpdateInS -= Time.deltaTime;
         if (nextTextUpdateInS <= 0f)
         {
+            cachedText = "";
+            CalculateAndUpdateScoreString();
             terminal.text = cachedText;
             nextTextUpdateInS = deltaTextUpdateS;
         }
