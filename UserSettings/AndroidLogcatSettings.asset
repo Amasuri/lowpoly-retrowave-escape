@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "NXEDU19509001762",
         "name": "com.amasuri.LowpolySunsetEscape",
-        "processId": 19501,
+        "processId": 25820,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -54,6 +54,18 @@
             "deviceId": "NXEDU19509001762",
             "name": "com.amasuri.LowpolySunsetEscape",
             "processId": 19501,
+            "exited": false
+        },
+        {
+            "deviceId": "NXEDU19509001762",
+            "name": "com.amasuri.LowpolySunsetEscape",
+            "processId": 23536,
+            "exited": false
+        },
+        {
+            "deviceId": "NXEDU19509001762",
+            "name": "com.amasuri.LowpolySunsetEscape",
+            "processId": 25820,
             "exited": false
         }
     ],
